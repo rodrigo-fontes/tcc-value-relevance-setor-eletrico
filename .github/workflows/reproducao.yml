@@ -1,0 +1,46 @@
+name: Reprodução
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  reproduzir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: "release"
+          use-public-rspm: true
+
+      - name: Dependências
+        run: |
+          pip install -r python/requirements.txt
+          Rscript -e 'install.packages("fixest")'
+
+      - name: Versão Python (falha se a conferência acusar diferença)
+        run: python python/executar.py
+
+      - name: Versão R
+        run: |
+          Rscript R/executar.R
+          grep -q "TUDO CONFERIDO" resultados/r/log_execucao.txt
+
+      - name: Python × R
+        run: python scripts/comparar_versoes.py
+
+      - name: Publicar relatórios e tabelas
+        uses: actions/upload-artifact@v4
+        with:
+          name: resultados
+          path: |
+            resultados/*/relatorio_reproducao.pdf
+            resultados/*/conferencia_tcc.csv
+            resultados/*/tabelas_tcc/
