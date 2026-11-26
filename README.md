@@ -1,5 +1,6 @@
 # Fundamentos contábeis e capitalização de mercado de empresas elétricas brasileiras
 
+[![Reprodução](https://github.com/rodrigo-fontes/tcc-value-relevance-setor-eletrico/actions/workflows/reproducao.yml/badge.svg)](https://github.com/rodrigo-fontes/tcc-value-relevance-setor-eletrico/actions/workflows/reproducao.yml)
 [![Código: MIT](https://img.shields.io/badge/c%C3%B3digo-MIT-blue.svg)](LICENSE)
 [![Texto: CC BY 4.0](https://img.shields.io/badge/texto-CC%20BY%204.0-lightgrey.svg)](LICENSE-docs.md)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB.svg)](python/)
