@@ -18,4 +18,4 @@ Módulos, na ordem do pipeline:
     conferencia     pacote original, statsmodels/linearmodels e texto do TCC
     relatorio       relatório explicado em PDF
 """
-__version__ = "1.0.0"
+__version__ = "1.0.0"                                         # versão do pacote

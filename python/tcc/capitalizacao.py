@@ -85,7 +85,7 @@ def escala_do_ano(ff: pd.DataFrame, r) -> list:               # escala válida n
 
 def saldos_tesouraria(tes: pd.DataFrame, especie: str) -> np.ndarray:  # saldos de tesouraria informados no FRE
     """Saldos finais distintos de tesouraria informados no FRE para uma espécie (Ordinária/Preferencial)."""
-    return tes[tes.Especie_Acao.eq(especie)].Quantidade_Final.dropna().unique()
+    return tes[tes.Especie_Acao.eq(especie)].Quantidade_Final.dropna().unique()  # saldos distintos, sem ausentes
 
 
 def quantidades_dfp(emp, ano, r, escala, ff, d, tes, notas):  # caminho principal (DFP conciliada)
