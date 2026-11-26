@@ -55,7 +55,7 @@ $$y_{it} = \alpha_i + \lambda_t + \beta_1\,\mathrm{ROE}_{i,t-1} + \beta_2\,\math
 
 N = 76; G = 14; K = 22; R² intra-grupo = 0,2130; R² parcial de duas vias = 0,2896.
 
-**Leitura.** No modelo principal, H1 foi contrariada (ROE maior associado a menor capitalização), e H2 e H3 receberam apoio. Nas 18 verificações da matriz de sensibilidade (Tabela 7), o ROE foi significativo pelo WCR em 12, a alavancagem em 13 e o porte em 15. O sinal do ROE perdeu significância com ln(PL), com o ROA e sem a CEB, que concentra 54,55% da variação que identifica o coeficiente do ROE. Os resultados medem associação, não causalidade.
+**Leitura.** No modelo principal, H1 foi contrariada (ROE maior associado a menor capitalização), e H2 e H3 receberam apoio. Nas 18 verificações da matriz de sensibilidade (Tabela 7), o ROE foi significativo pelo WCR em 12, a alavancagem em 13 e o porte em 15. A rentabilidade perdeu significância com ln(PL), com o ROA e sem a CEB, que concentra 54,55% da variação que identifica o coeficiente do ROE. Os resultados medem associação, não causalidade.
 
 > Detalhes de cada etapa, com as equações e as referências: [docs/metodologia.md](docs/metodologia.md). Relatório completo gerado pelos scripts: [docs/relatorio_reproducao.pdf](docs/relatorio_reproducao.pdf).
 
@@ -65,7 +65,7 @@ N = 76; G = 14; K = 22; R² intra-grupo = 0,2130; R² parcial de duas vias = 0,2
 
 | Pasta | Conteúdo | Dependências |
 |---|---|---|
-| [`python/`](python/) | pacote `tcc` em 11 módulos e `executar.py` | pandas, NumPy, SciPy, matplotlib; statsmodels e linearmodels só na conferência |
+| [`python/`](python/) | pacote `tcc` em 11 módulos e `executar.py` | pandas, NumPy, SciPy, matplotlib; mínimos quadrados com indicadoras de empresa e ano em NumPy, conferidos com statsmodels (a biblioteca citada no TCC) e linearmodels |
 | [`R/`](R/) | os mesmos 11 módulos em R e `executar.R` | só R base; fixest opcional, só na conferência |
 
 As duas versões são independentes, comentadas linha a linha e citam no código o referencial teórico de cada etapa. Partem dos mesmos dados (`dados/`) e do mesmo roteiro de relatório (`relatorio/roteiro.txt`), e cada uma grava em sua própria pasta: `resultados/python/` e `resultados/r/`. O script `scripts/comparar_versoes.py` confirma que os resultados são idênticos (diferença máxima da ordem de 10⁻¹³).

@@ -1,6 +1,6 @@
 # Versão Python — pacote `tcc`
 
-Implementação em Python do pacote de reprodução. A estatística é escrita com álgebra de matrizes em NumPy, para que cada número possa ser rastreado até uma fórmula. As bibliotecas statsmodels e linearmodels entram apenas na conferência B, como verificação independente.
+Implementação em Python do pacote de reprodução. A estatística é escrita com álgebra de matrizes em NumPy, para que cada número possa ser rastreado até uma fórmula. A estimação é a mesma descrita no TCC (mínimos quadrados com indicadores de empresa e de ano, via statsmodels): o pacote calcula em NumPy e a conferência B refaz tudo com statsmodels e linearmodels, com diferença máxima de 10⁻¹⁰.
 
 ## Instalação e execução
 
