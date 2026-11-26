@@ -1,0 +1,9 @@
+# Dependências da versão Python (Python >= 3.12).
+# Versões do pacote original; versões mais novas produziram resultados idênticos
+# (testado com numpy 2.5, pandas 3.0, scipy 1.18, statsmodels 0.15, linearmodels 7.1, matplotlib 3.10).
+numpy>=2.3
+pandas>=2.2
+scipy>=1.17
+matplotlib>=3.10
+statsmodels>=0.15     # só na conferência B
+linearmodels>=7.0     # só na conferência B
