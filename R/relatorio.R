@@ -23,11 +23,11 @@ carregar_relatorio <- function() {                         # resultados e confer
   .rel$fin <- ler(file.path(s, "financeiro.csv"))          # fundamentos por exercício
   .rel$cor <- ler(file.path(s, "correcoes_lucro.csv"))     # conciliação do lucro
   carregar_resultados(s)                                   # tabelas usadas pelas chaves
-  pub <- read.csv(file.path(DADOS, "documentos", "valores_publicados_tcc.csv"), colClasses = "character",  # 465 valores publicados, como texto
+  pub <- read.csv(file.path(DADOS, "documentos", "valores_publicados_tcc.csv"), colClasses = "character",  # 498 valores publicados, como texto
                   encoding = "UTF-8", check.names = FALSE)    # (continuação)
   pub$calculado <- mapply(function(c, dc, t) formatar(valor(c), dc, t), pub$chave, pub$decimais, pub$tipo)  # recalcula e formata
   pub$confere <- pub$calculado == pub$publicado            # mesma comparação de conferencia.R
-  .rel$pub <- pub; .rel$n_ok <- sum(pub$confere); .rel$n_tot <- nrow(pub)   # 465 de 465
+  .rel$pub <- pub; .rel$n_ok <- sum(pub$confere); .rel$n_tot <- nrow(pub)   # 498 de 498
 }
 
 # =============================================================================
@@ -119,7 +119,7 @@ t_conf_resumo <- function() {                              # conferência com o 
           "Comparação do texto formatado: mesmas casas decimais, vírgula e '< 0,0001'."))  # nota
 }
 
-t_conf_detalhe <- function() {                             # anexo: os 465 valores
+t_conf_detalhe <- function() {                             # anexo: os 498 valores
   pub <- .rel$pub                                             # valores
   list(tb("", c("Origem", "Linha", "Item", "Publicado", "Calculado", "Confere"),  # anexo
           lapply(seq_len(nrow(pub)), function(i) c(pub$tabela[i], pub$linha[i], pub$item[i], pub$publicado[i], pub$calculado[i],  # uma linha por valor
@@ -167,8 +167,10 @@ ler_roteiro <- function() {                                # roteiro → lista d
     else if (startsWith(linha, "@tabela ")) {              # tabela de resultados/tabelas_tcc
       fecha()                                                 # fecha o bloco anterior
       p <- trimws(strsplit(substring(linha, 9), "|", fixed = TRUE)[[1]])    # arquivo | título | nota | cabeçalhos
-      df <- read.csv(file.path(TABELAS, p[1]), colClasses = "character", encoding = "UTF-8", check.names = FALSE)  # lê a tabela como texto
-      ls <- lapply(seq_len(nrow(df)), function(i) br(vapply(unlist(df[i, ]), function(v) if (v %in% names(nomes)) nomes[[v]] else v, "")))  # rótulos e vírgula decimal
+      bruto <- endsWith(p[1], "!")                            # "arquivo.csv!" = texto literal (códigos de conta, nomes de colunas)
+      df <- read.csv(file.path(TABELAS, sub("!$", "", p[1])), colClasses = "character", encoding = "UTF-8", check.names = FALSE)  # lê a tabela como texto
+      conv <- if (bruto) function(v) v else function(v) br(vapply(v, function(x) if (x %in% names(nomes)) nomes[[x]] else x, ""))  # literal ou rótulos e vírgula
+      ls <- lapply(seq_len(nrow(df)), function(i) unname(conv(unlist(df[i, ]))))  # células formatadas
       add(list("tabela", tb(p[2], strsplit(p[4], ";", fixed = TRUE)[[1]], ls, p[3])))  # tabela com título, cabeçalho e nota
     } else if (startsWith(linha, "@")) {                   # demais diretivas
       fecha(); nome <- trimws(substring(linha, 2))            # nome da diretiva
@@ -301,7 +303,7 @@ capa <- function() {                                       # capa com resumo da 
   caixa(paste0("Gerado em ", format(Sys.Date(), "%d/%m/%Y"), " pela versão em ", LINGUAGEM,  # data, linguagem e origem dos dados
                " do pacote de reprodução, a partir dos extratos preservados da CVM e da B3, sem acesso à internet."))  # (continuação)
   sit <- if (.rel$n_ok == .rel$n_tot) "todos coincidem" else paste(.rel$n_tot - .rel$n_ok, "divergem")  # situação da conferência
-  paragrafo(sprintf("Conferência com o texto do TCC: %d de %d valores coincidem (%s).", .rel$n_ok, .rel$n_tot, sit), 11, depois = 0.12)  # 465 de 465
+  paragrafo(sprintf("Conferência com o texto do TCC: %d de %d valores coincidem (%s).", .rel$n_ok, .rel$n_tot, sit), 11, depois = 0.12)  # 498 de 498
   paragrafo(sprintf("Painel principal: %d observações de %d empresas, 2020–2025. Painel histórico: %d observações de %d empresas, 2012–2025.",  # tamanho dos painéis
                     as.integer(.res$fun[["minimo_quatro_anos"]]), length(unique(.res$d$ticker)), nrow(.res$h), length(unique(.res$h$ticker))),  # (continuação)
             11, depois = 0.12)                                # (fim)

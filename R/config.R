@@ -69,6 +69,37 @@ BLOCO_WCR      <- 4096                                     # combinações de si
 TOL_EMPATE_WCR <- 1e-10                                    # tolerância numérica para |t*| >= |t observado|
 DEFASAGENS_DK  <- 1:2                                      # Driscoll–Kraay: Bartlett com 1 e 2 defasagens
 
+# -----------------------------------------------------------------------------
+# Tabelas descritivas do TCC (texto e códigos, sem resultados estimados)
+# -----------------------------------------------------------------------------
+ETAPAS_TCC <- data.frame(                                  # Tabela 2 do TCC + módulo que executa cada etapa
+  etapa = c("Identificação", "Contabilidade", "Capitalização", "Painel", "Estimação", "Sensibilidade"),  # etapas
+  procedimento = c("Código CVM, CNPJ e classes de ações",  # o texto do TCC
+                   "Exercício corrente, versão, escala e conciliação do lucro",  # (continuação)
+                   "Quantidade por classe, tesouraria e cotação nominal",  # (continuação)
+                   "Defasagem anual, denominadores válidos e mínimo de quatro anos",  # (continuação)
+                   "Efeitos fixos de empresa e ano; inferência agrupada, bootstrap e Driscoll–Kraay",  # (continuação)
+                   "Extremos, composição, negociação e extensão histórica"),  # (fim)
+  modulo = paste0("tcc.", c("entradas", "contabil", "capitalizacao", "painel", "estimacao", "especificacoes")))  # mesmos nomes da versão Python
+VARIAVEIS_TCC <- data.frame(                               # Tabela 3 do TCC + equação e coluna do painel
+  medida = c("Valor de mercado", "Rentabilidade", "Alavancagem", "Porte"),  # medidas
+  definicao = c("Logaritmo da capitalização das classes elegíveis", "Lucro / patrimônio da controladora",  # definições
+                "Dívida financeira líquida / EBITDA aproximado", "Logaritmo do ativo total"),  # (fim)
+  unidade = c("ln de reais", "Decimal", "Vezes", "ln de reais"),  # unidades
+  equacao = c("eqs. 1–2", "eq. 3", "eqs. 4–5", "eq. 6"),   # equações do TCC
+  coluna = c("ln_mcap", "roe_lag", "dl_lag", "size_lag"))  # nome da coluna no painel
+RUBRICAS <- data.frame(                                    # Apêndice B, Tabela 1 — contas usadas por contabil.R e entradas.R
+  conta = c("Ativo total", "Caixa e equivalentes", "Aplicações financeiras (sensibilidade)",  # contas
+            "Empréstimos e financiamentos de curto prazo", "Empréstimos e financiamentos de longo prazo",  # (continuação)
+            "Patrimônio líquido total", "Participação dos não controladores no patrimônio",  # (continuação)
+            "Resultado antes do financeiro e dos tributos", "Lucro líquido total", "Lucro atribuível à controladora",  # (continuação)
+            "Lucro atribuível aos não controladores", "Depreciação, amortização e exaustão"),  # (fim)
+  demonstracao = c("BPA", "BPA", "BPA", "BPP", "BPP", "BPP", "BPP", "DRE", "DRE", "DRE", "DRE", "DVA"),  # demonstração
+  codigo = c("1", "1.01.01", "1.01.02", "2.01.04", "2.02.01", "2.03", "2.03.09", "3.05", "3.11", "3.11.01",  # códigos CVM
+             "3.11.02", "7.04.01"))                         # (fim)
+DEMONSTRACOES <- c(BPA = "Balanço Patrimonial Ativo", BPP = "Balanço Patrimonial Passivo",  # sigla → nome no GRUPO_DFP
+                   DRE = "Demonstração do Resultado", DVA = "Demonstração de Valor Adicionado")  # (fim)
+
 NOMES_EMPRESAS <- c(AURE3 = "Auren", CEBR3 = "CEB", CLSC3 = "Celesc", CMIG3 = "Cemig",   # rótulos das 14 empresas
                     CPFE3 = "CPFL", EGIE3 = "Engie", EKTR3 = "Elektro", ENEV3 = "Eneva",  # (continuação)
                     EQTL3 = "Equatorial", GEPA3 = "Rio Paranapanema", LIGT3 = "Light",  # (continuação)

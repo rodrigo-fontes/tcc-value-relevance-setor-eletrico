@@ -27,7 +27,7 @@ As saídas vão para `resultados/python/`. O código de saída é 1 se a confer�
 | `tcc/painel.py` | eq. (2), defasagem, filtros, winsorização, funil | `decisoes`, `montar`, `winsorizar`, `funil` |
 | `tcc/estimacao.py` | eq. (7), CR1, WCR, Driscoll–Kraay, Holm, R², VIF, FWL | `estimar`, `wild_cluster_restrito`, `driscoll_kraay`, `holm`, `vif_intra`, `fracao_fwl` |
 | `tcc/especificacoes.py` | Tabelas 7 e 8; Apêndice C | `painel_completo`, `painel_contemporaneo`, `catalogo`, `estimar_todos` |
-| `tcc/tabelas.py` | Tabelas 1, 4–8, Apêndice C, Figura 1; eq. (8) | `gerar`, `desenhar_figura1` |
+| `tcc/tabelas.py` | Tabelas 1–8, Apêndices A, B e C, Figura 1; eq. (8) | `gerar`, `tabelas_descritivas`, `elegibilidade`, `desenhar_figura1` |
 | `tcc/valores.py` | números citados no TCC | `valor`, `formatar` |
 | `tcc/conferencia.py` | Apêndice B (reprodução) | `pacote_original`, `bibliotecas`, `texto_do_tcc`, `executar` |
 | `tcc/relatorio.py` | relatório em PDF | `gerar` |

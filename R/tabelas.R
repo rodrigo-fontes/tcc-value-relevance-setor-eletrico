@@ -117,6 +117,9 @@ gerar_tabelas <- function(saida) {                         # gera todas as tabel
   gravar(data.frame(fundamento = unname(NOMES_FUND[V]), p_DK1 = fp(sapply(V, function(v) C("principal", v, "p_DK1"))),  # Driscoll–Kraay do principal
                     p_DK2 = fp(sapply(V, function(v) C("principal", v, "p_DK2")))), file.path(tab, "apC_tabela_4_driscoll_kraay.csv"))  # grava
 
+  # Tabelas descritivas (texto e códigos) e as do Apêndice A
+  tabelas_descritivas(saida)                                  # Tabelas 2 e 3, Apêndice A (1 e 2), Apêndice B (1)
+
   # Números citados no texto (R², VIF, concentração da CEB, dívida ampliada, funil)
   inf <- ler(file.path(saida, "influencia_observacoes.csv")); ve <- ler(file.path(saida, "variacao_por_empresa.csv"))  # frações por observação e por empresa
   pc <- ler(file.path(saida, "painel_completo.csv"))          # painel com dívida ampliada
@@ -136,6 +139,61 @@ gerar_tabelas <- function(saida) {                         # gera todas as tabel
   for (k in 1:3) desenhar_painel_figura1(coef, d, k)          # desenha
   invisible(dev.off())                                        # fecha o PNG
   invisible(cont)                                             # contagens
+}
+
+# Por empresa, na janela do painel principal (2020–2025): anos com capitalização conciliada, anos com
+# os três fundamentos de t−1, exercícios elegíveis (os dois ao mesmo tempo), anos no painel e os
+# motivos de exclusão registrados (do mais ao menos frequente). Base das duas tabelas do Apêndice A.
+elegibilidade <- function(saida) {                         # empresa × janela principal
+  d <- ler(file.path(saida, "decisoes_amostra.csv"))       # uma linha por empresa-ano (23 emissoras)
+  d <- d[d$ano >= ANO_INICIO_PRINCIPAL & d$ano <= ANO_FIM, ]  # janela 2020–2025
+  d$cap_ok <- d$status == "ok"                             # capitalização conciliada
+  d$fund_ok <- complete.cases(d[, FUNDAMENTOS])            # ROE, AL e PORTE de t−1 disponíveis
+  motivos <- function(s) { s <- s[s != "ok"]; u <- unique(s)  # códigos de exclusão distintos (ordem de aparição)
+    if (!length(u)) return("")                                # empresa sem exclusões
+    paste(u[order(-vapply(u, function(x) sum(s == x), 0))], collapse = ";") }  # do mais ao menos frequente (empate: ordem de aparição)
+  tk <- sort(unique(d$ticker))                             # empresas em ordem alfabética (como o groupby do pandas)
+  data.frame(ticker = tk, row.names = tk,                  # uma linha por empresa
+             capitalizacao = sapply(tk, function(t) sum(d$cap_ok[d$ticker == t])),  # anos com capitalização
+             fundamentos = sapply(tk, function(t) sum(d$fund_ok[d$ticker == t])),  # anos com fundamentos
+             elegiveis = sapply(tk, function(t) sum(d$cap_ok[d$ticker == t] & d$fund_ok[d$ticker == t])),  # os dois
+             no_painel = sapply(tk, function(t) sum(verdade(as.logical(d$incluido_principal[d$ticker == t])))),  # anos no painel
+             motivo = sapply(tk, function(t) motivos(d$status[d$ticker == t])))  # motivos de exclusão
+}
+
+MOTIVOS <- c(excluir_preco_classe_ausente = "sem cotação de dezembro da classe",  # P da mesma classe ausente
+             excluir_capital_ambiguo_ou_ausente = "capital ambíguo ou ausente na CVM",  # Q não determinada
+             excluir_tesouraria_nao_documentada = "tesouraria não documentada",  # T ausente
+             excluir_subclasses_ou_tesouraria = "subclasses (PNA/PNB) ou tesouraria sem repartição",  # Q por classe indeterminada
+             excluir_divergencia_tesouraria_DFP_FRE = "tesouraria divergente entre DFP e FRE",  # T inconsistente
+             excluir_divergencia_tesouraria_FRE = "tesouraria ambígua no FRE",  # T inconsistente
+             excluir_tesouraria_evento_posterior = "evento societário com tesouraria",  # evento desfeito + T
+             excluir_quantidade_invalida = "quantidade em circulação não positiva")  # Q − T ≤ 0
+
+# Tabelas 2 e 3 do TCC, Apêndice A (Tabelas 1 e 2) e Apêndice B (Tabela 1).
+# O texto vem de config.R (o mesmo do TCC); os números e as listas de empresas vêm dos dados.
+tabelas_descritivas <- function(saida) {                   # tabelas sem estimação
+  tab <- file.path(saida, "tabelas_tcc")                     # pasta de saída
+  gravar(ETAPAS_TCC, file.path(tab, "tabela_2_etapas.csv"))  # Tabela 2 + módulo que executa
+  gravar(VARIAVEIS_TCC, file.path(tab, "tabela_3_variaveis.csv"))  # Tabela 3
+
+  el <- elegibilidade(saida)                                 # contagens por empresa (2020–2025)
+  d <- ler(file.path(saida, "painel_principal.csv"))         # 76 observações
+  car <- ler(file.path(DADOS, "documentos", "caracterizacao_empresas.csv"))  # segmento e relação societária (TCC)
+  gravar(data.frame(companhia = car$companhia, ticker = car$codigo,  # Apêndice A, Tabela 1
+                    N = sapply(car$codigo, function(t) sum(d$ticker == t)),  # N recalculado a partir do painel
+                    segmento = car$segmento_G_geracao_T_transmissao_D_distribuicao,  # segmento (documental)
+                    relacao_societaria = car$relacao_societaria), file.path(tab, "apA_tabela_1_companhias.csv"))  # grava
+
+  fora <- el[el$no_painel == 0, ]                            # emissoras sem nenhum ano no painel principal
+  fora$motivos_no_codigo <- vapply(strsplit(fora$motivo, ";", fixed = TRUE),  # motivos legíveis
+                                   function(m) paste(unname(MOTIVOS[m[m != ""]]), collapse = "; "), "")  # (continuação)
+  tcc <- ler(file.path(DADOS, "documentos", "companhias_fora_painel_tcc.csv"))  # restrições como escritas no TCC
+  fora <- merge(fora, tcc, by = "ticker", all = TRUE)        # all: uma empresa só de um lado aparece
+  gravar(fora[order(fora$ticker), c("identificador", "ticker", "capitalizacao", "fundamentos", "elegiveis",  # colunas
+                                    "motivos_no_codigo", "restricao_tcc")], file.path(tab, "apA_tabela_2_fora_do_painel.csv"))  # grava
+
+  gravar(RUBRICAS, file.path(tab, "apB_tabela_1_rubricas.csv"))  # Apêndice B, Tabela 1
 }
 
 desenhar_painel_figura1 <- function(coef, d, k) {          # um painel da Figura 1 (k = 1 ROE, 2 AL, 3 PORTE)

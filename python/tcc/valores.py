@@ -21,9 +21,14 @@ Gramática das chaves (campos separados por "|"):
     funil|etapa                   contagens do funil (138, 90, 84, 76)
     contagem|coluna               linhas significativas na Tabela 7 (12, 13, 15)
     cobertura|painel|ano          empresas por ano (Tabela 1); ano = total para o N
+    apa_n|ticker                  observações da empresa no painel principal (Apêndice A, Tabela 1)
+    apa_total|companhias ou obs   nota do Apêndice A, Tabela 1 (14 e 76)
+    apa_elegiveis|ticker          exercícios elegíveis em 2020–2025 (Apêndice A, Tabela 2)
+    param|nome                    parâmetros citados nas Tabelas 2 e 3 (percentis, mínimo de anos)
+    rubrica|conta                 código CVM da conta, só se ela existe nos extratos (Apêndice B)
 
 Tipos de formatação: num (casas decimais), p ("< 0,0001" se menor), p_estrela (com "*"
-se p < 0,05), abs (valor absoluto), int, ngk.
+se p < 0,05), abs (valor absoluto), int, ngk, texto (sem mudança), extenso ("dois").
 """
 import json                                                   # JSON
 from functools import lru_cache                             # lê os resultados uma vez só
@@ -47,6 +52,9 @@ def _res(saida):                                              # carrega resultad
     r["dg"] = json.loads((saida / "diagnosticos.json").read_text())  # VIF
     r["fun"] = json.loads((saida / "funil.json").read_text())  # funil
     r["c7"] = json.loads((saida / "tabelas_tcc" / "tabela_7_contagem.json").read_text())["significativos"]  # contagens da Tabela 7
+    from .tabelas import elegibilidade                        # evita importação circular no topo
+    r["el"] = elegibilidade(saida)                            # contagens por empresa (Apêndice A)
+    r["rub"] = rubricas_nos_dados()                           # rubricas presentes nos extratos (Apêndice B)
     return r                                                  # tudo carregado
 
 
@@ -85,13 +93,40 @@ def valor(chave: str, saida=C.RESULTADOS):                    # chave → valor
     if k[0] == "cobertura":                                   # Tabela 1
         p = r["d"] if k[1] == "principal" else r["h"]         # painel escolhido
         return len(p) if k[2] == "total" else int((p.ano == int(k[2])).sum())  # N ou empresas do ano
+    if k[0] == "apa_n":                                       # Apêndice A, Tabela 1
+        return int((r["d"].ticker == k[1]).sum())             # observações da empresa no painel principal
+    if k[0] == "apa_total":                                   # nota do Apêndice A, Tabela 1
+        return r["d"].ticker.nunique() if k[1] == "companhias" else len(r["d"])  # 14 companhias ou 76 observações
+    if k[0] == "apa_elegiveis":                               # Apêndice A, Tabela 2
+        return int(r["el"].loc[k[1], "elegiveis"])            # exercícios elegíveis em 2020–2025
+    if k[0] == "param":                                       # parâmetros citados nas Tabelas 2 e 3
+        return {"winsor_inf": 100 * C.PERCENTIS_WINSOR[0], "winsor_sup": 100 * C.PERCENTIS_WINSOR[1],  # percentis 1 e 99
+                "min_exercicios": C.MIN_EXERCICIOS}[k[1]]     # mínimo de quatro anos
+    if k[0] == "rubrica":                                     # Apêndice B, Tabela 1
+        return r["rub"].get(k[1], "")                         # código da conta, se ela de fato existe nos dados
     raise KeyError(chave)                                     # chave desconhecida
+
+
+def rubricas_nos_dados():                                     # conta → código, só se presente
+    """Código de cada rubrica do Apêndice B, mantido só se a conta existe nos extratos da CVM
+    na demonstração indicada (assim a conferência prova que a tabela descreve os dados usados)."""
+    import glob                                               # lista de arquivos
+    c = pd.read_csv(C.DADOS / "cvm" / "contas_cvm.csv", dtype={"CD_CONTA": str}, usecols=["CD_CONTA", "GRUPO_DFP"])  # extrato principal
+    a = pd.concat(pd.read_csv(f, dtype={"CD_CONTA": str}, usecols=["CD_CONTA", "GRUPO_DFP"])  # extratos complementares
+                  for f in sorted(glob.glob(str(C.DADOS / "cvm_complementar" / "complementos_*.csv"))))  # (1.01.02)
+    pares = set(zip(pd.concat([c, a]).CD_CONTA, pd.concat([c, a]).GRUPO_DFP.str.split(" - ", n=1).str[1]))  # (código, demonstração)
+    return {conta: cod for conta, dem, cod in C.RUBRICAS if (cod, C.DEMONSTRACOES[dem]) in pares}  # só as encontradas
+
+
+EXTENSO = ["zero", "um", "dois", "três", "quatro", "cinco", "seis"]  # números que o TCC escreve por extenso
 
 
 def formatar(x, dec, tipo):                                   # formato do TCC
     """Formato do TCC: vírgula decimal, sinal de menos tipográfico (−), '< 0,0001' e asterisco."""
-    if tipo == "ngk":                                         # texto pronto
+    if tipo in ("ngk", "texto"):                              # texto pronto (N/G/K ou código de conta)
         return x                                              # sem mudança
+    if tipo == "extenso":                                     # inteiro escrito por extenso no TCC
+        return EXTENSO[int(x)]                                # ex.: 2 → "dois"
     if tipo == "int":                                         # inteiro
         return str(int(x))                                    # sem casas
     if tipo in ("p", "p_estrela") and x < 1e-4:               # p muito pequeno

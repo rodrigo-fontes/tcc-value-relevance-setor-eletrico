@@ -78,6 +78,37 @@ BLOCO_WCR = 4096                                           # combinações de si
 TOL_EMPATE_WCR = 1e-10                                     # tolerância numérica para |t*| >= |t observado|
 DEFASAGENS_DK = (1, 2)                                     # Driscoll–Kraay: Bartlett com uma e duas defasagens
 
+# -----------------------------------------------------------------------------
+# Tabelas descritivas do TCC (texto e códigos, sem resultados estimados)
+# -----------------------------------------------------------------------------
+# Tabela 2 do TCC — etapas de construção e verificação, com o módulo que executa cada uma
+ETAPAS_TCC = [("Identificação", "Código CVM, CNPJ e classes de ações", "entradas"),  # (etapa, procedimento, módulo)
+              ("Contabilidade", "Exercício corrente, versão, escala e conciliação do lucro", "contabil"),  # (continuação)
+              ("Capitalização", "Quantidade por classe, tesouraria e cotação nominal", "capitalizacao"),  # (continuação)
+              ("Painel", "Defasagem anual, denominadores válidos e mínimo de quatro anos", "painel"),  # (continuação)
+              ("Estimação", "Efeitos fixos de empresa e ano; inferência agrupada, bootstrap e Driscoll–Kraay", "estimacao"),  # (continuação)
+              ("Sensibilidade", "Extremos, composição, negociação e extensão histórica", "especificacoes")]  # (fim)
+# Tabela 3 do TCC — definição e unidade das variáveis, com a equação e a coluna do painel
+VARIAVEIS_TCC = [("Valor de mercado", "Logaritmo da capitalização das classes elegíveis", "ln de reais", "eqs. 1–2", "ln_mcap"),  # (medida, definição, unidade, equação, coluna)
+                 ("Rentabilidade", "Lucro / patrimônio da controladora", "Decimal", "eq. 3", "roe_lag"),  # (continuação)
+                 ("Alavancagem", "Dívida financeira líquida / EBITDA aproximado", "Vezes", "eqs. 4–5", "dl_lag"),  # (continuação)
+                 ("Porte", "Logaritmo do ativo total", "ln de reais", "eq. 6", "size_lag")]  # (fim)
+# Apêndice B, Tabela 1 — rubricas da CVM usadas pelos módulos contabil e entradas
+RUBRICAS = [("Ativo total", "BPA", "1"),                      # (conta, demonstração, código CVM)
+            ("Caixa e equivalentes", "BPA", "1.01.01"),       # (continuação)
+            ("Aplicações financeiras (sensibilidade)", "BPA", "1.01.02"),  # (continuação)
+            ("Empréstimos e financiamentos de curto prazo", "BPP", "2.01.04"),  # (continuação)
+            ("Empréstimos e financiamentos de longo prazo", "BPP", "2.02.01"),  # (continuação)
+            ("Patrimônio líquido total", "BPP", "2.03"),     # (continuação)
+            ("Participação dos não controladores no patrimônio", "BPP", "2.03.09"),  # (continuação)
+            ("Resultado antes do financeiro e dos tributos", "DRE", "3.05"),  # (continuação)
+            ("Lucro líquido total", "DRE", "3.11"),          # (continuação)
+            ("Lucro atribuível à controladora", "DRE", "3.11.01"),  # (continuação)
+            ("Lucro atribuível aos não controladores", "DRE", "3.11.02"),  # (continuação)
+            ("Depreciação, amortização e exaustão", "DVA", "7.04.01")]  # (fim)
+DEMONSTRACOES = {"BPA": "Balanço Patrimonial Ativo", "BPP": "Balanço Patrimonial Passivo",  # sigla → nome no campo GRUPO_DFP
+                 "DRE": "Demonstração do Resultado", "DVA": "Demonstração de Valor Adicionado"}  # (fim)
+
 # Nomes das empresas para tabelas e figura
 NOMES_EMPRESAS = {"AURE3": "Auren", "CEBR3": "CEB", "CLSC3": "Celesc", "CMIG3": "Cemig", "CPFE3": "CPFL",  # rótulos das 14 empresas do painel
                   "EGIE3": "Engie", "EKTR3": "Elektro", "ENEV3": "Eneva", "EQTL3": "Equatorial",  # (continuação)

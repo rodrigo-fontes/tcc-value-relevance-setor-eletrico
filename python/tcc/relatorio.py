@@ -59,10 +59,10 @@ def _carregar():                                              # carrega resultad
     r = _res(s)                                              # tabelas já carregadas por tcc.valores
     d, h, fun = r["d"], r["h"], r["fun"]                     # painéis e funil
     coef_df = pd.read_csv(s / "coeficientes.csv")            # coeficientes (Figura 1)
-    pub = pd.read_csv(C.DADOS / "documentos" / "valores_publicados_tcc.csv", dtype=str, keep_default_na=False)  # 465 valores publicados, como texto
+    pub = pd.read_csv(C.DADOS / "documentos" / "valores_publicados_tcc.csv", dtype=str, keep_default_na=False)  # 498 valores publicados, como texto
     pub["calculado"] = [formatar(valor(c), dc, t) for c, dc, t in zip(pub.chave, pub.decimais, pub.tipo)]  # recalcula e formata cada valor
     pub["confere"] = pub.calculado == pub.publicado          # mesma comparação de tcc.conferencia
-    n_ok, n_tot = int(pub.confere.sum()), len(pub)           # 465 de 465
+    n_ok, n_tot = int(pub.confere.sum()), len(pub)           # 498 de 498
 
 
 # =============================================================================
@@ -163,13 +163,13 @@ def t_conf_resumo():                                          # resumo da confer
     """Resumo da conferência com o TCC, por tabela."""
     g = pub.groupby("tabela", sort=False).confere.agg(["size", "sum"])      # valores e acertos por origem
     linhas = [[t, str(int(r["size"])), str(int(r["sum"]))] for t, r in g.iterrows()]  # origem, valores e acertos
-    linhas.append(["Total", str(n_tot), str(n_ok)])          # 465 / 465
+    linhas.append(["Total", str(n_tot), str(n_ok)])          # 498 / 498
     return [("Valores do TCC recalculados", ["Origem no TCC", "Valores", "Coincidem"], linhas,  # tabela
              "Comparação do texto formatado: mesmas casas decimais, vírgula e '< 0,0001'.")]  # nota
 
 
-def t_conf_detalhe():                                         # anexo com os 465 valores
-    """Anexo: os 465 valores, um a um."""
+def t_conf_detalhe():                                         # anexo com os 498 valores
+    """Anexo: os 498 valores, um a um."""
     linhas = [[r.tabela, r.linha, r.item, r.publicado, r.calculado, "sim" if r.confere else "NÃO"]  # uma linha por valor
               for r in pub.itertuples()]                      # (continuação)
     return [("", ["Origem", "Linha", "Item", "Publicado", "Calculado", "Confere"], linhas, "")]  # tabela sem título
@@ -231,8 +231,10 @@ def ler_roteiro():                                            # roteiro → bloc
         elif linha.startswith("@tabela "):                   # tabela de resultados_tcc/
             fecha()                                           # fecha o bloco
             arq, titulo, nota, cab = [x.strip() for x in linha[8:].split("|")]       # arquivo | título | nota | cabeçalhos
-            df = pd.read_csv(C.TABELAS / arq, dtype=str, keep_default_na=False)    # lê como texto
-            linhas = [[br(NOMES.get(v, v)) for v in r] for r in df.itertuples(index=False)]   # rótulos e vírgula
+            bruto = arq.endswith("!")                         # "arquivo.csv!" = texto literal (códigos de conta, nomes de colunas)
+            df = pd.read_csv(C.TABELAS / arq.rstrip("!"), dtype=str, keep_default_na=False)    # lê como texto
+            conv = (lambda v: v) if bruto else (lambda v: br(NOMES.get(v, v)))  # literal ou rótulos e vírgula
+            linhas = [[conv(v) for v in r] for r in df.itertuples(index=False)]   # células formatadas
             blocos.append(("tabela", titulo, cab.split(";"), linhas, nota))  # tabela pronta
         elif linha.startswith("@"):                          # demais diretivas
             fecha()                                           # fecha o bloco
@@ -448,7 +450,7 @@ class Pagina:                                                 # controle de pág
         self.caixa(f"Gerado em {hoje} pela versão em {LINGUAGEM} do pacote de reprodução, a partir dos extratos "  # quadro com data e linguagem
                    f"preservados da CVM e da B3, sem acesso à internet.")  # (continuação)
         sit = "todos coincidem" if n_ok == n_tot else f"{n_tot - n_ok} divergem"  # situação da conferência
-        self.paragrafo(f"Conferência com o texto do TCC: {n_ok} de {n_tot} valores coincidem ({sit}).", tam=11, depois=0.12)  # 465 de 465
+        self.paragrafo(f"Conferência com o texto do TCC: {n_ok} de {n_tot} valores coincidem ({sit}).", tam=11, depois=0.12)  # 498 de 498
         self.paragrafo(f"Painel principal: {fun['minimo_quatro_anos']} observações de {d.ticker.nunique()} empresas, "  # tamanho dos painéis
                        f"2020–2025. Painel histórico: {len(h)} observações de {h.ticker.nunique()} empresas, 2012–2025.", tam=11,  # (continuação)
                        depois=0.12)                           # (fim)
@@ -465,7 +467,7 @@ class Pagina:                                                 # controle de pág
 # =============================================================================
 # 5. Montagem
 # =============================================================================
-def gerar():
+def gerar():                                                  # roteiro → PDF
     """Lê o roteiro, diagrama todas as páginas e grava o PDF."""
     _carregar()                                              # resultados e conferência
     NOMES.clear()                                            # rótulos são relidos do roteiro

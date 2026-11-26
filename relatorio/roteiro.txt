@@ -11,6 +11,7 @@
 %   | a | b |            tabela fixa (primeira linha = cabeçalho; a linha | --- | é ignorada)
 %   @formula texto       fórmula centralizada
 %   @tabela arquivo.csv | título | nota | cabeçalhos separados por ;
+%   @tabela arquivo.csv! | ...   o "!" mantém o texto literal (sem vírgula decimal nem rótulos)
 %   @capa @funil @decisoes_capital @correcoes_lucro @lacunas @figura1
 %   @conferencia_resumo @conferencia_detalhe @pagina
 %   @nomes chave=rótulo;...   rótulos das variáveis nas tabelas
@@ -31,7 +32,7 @@ O relatório segue a ordem do TCC: dados e amostra, construção das variáveis,
 | --- | --- | --- |
 | 1. Construir a base | Concilia quantidade de ações, tesouraria e preço; calcula as contas e os fundamentos; monta os painéis | Seções 2 e 3 |
 | 2. Estimar | Modelo principal, inferência CR1 e WCR, Holm, Driscoll–Kraay e todas as sensibilidades | Seções 4 e 5 |
-| 3. Tabelas | Tabelas 1, 4 a 8, Apêndice C e Figura 1 | Seções 2 a 5 |
+| 3. Tabelas | Todas as tabelas do TCC (1 a 8 e Apêndices A, B e C) e a Figura 1 | Seções 2 a 5 |
 | 4. Conferir | Compara com as saídas originais, com pacotes estatísticos e com o texto do TCC | Seção 6 e anexo |
 
 ## 2. Dados e amostra
@@ -42,6 +43,10 @@ O relatório segue a ordem do TCC: dados e amostra, construção das variáveis,
 - CVM, Formulário de Referência (FRE): capital social por classe, subclasses de preferenciais e movimentação da tesouraria. Serve para conferir as quantidades da DFP.
 - B3, cotações históricas (COTAHIST): último negócio de dezembro de cada classe de ação, em preço nominal (sem ajuste retroativo por proventos ou desdobramentos).
 - Documentos originais das empresas, usados quando a base da CVM não permitia conciliar: Cemig 2020, CPFL em sete exercícios e EDP 2010–2011.
+
+A Tabela 2 do TCC resume as etapas. A última coluna indica o módulo do código que executa cada uma.
+
+@tabela tabela_2_etapas.csv | Tabela 2. Etapas de construção e verificação | O módulo tcc.painel aplica o mínimo de {param|min_exercicios;0;extenso} anos por empresa. | Etapa;Procedimento;Módulo
 
 ### 2.2 Capitalização de mercado
 
@@ -80,7 +85,21 @@ O painel não é balanceado: das 14 empresas, nove têm os seis anos. A tabela m
 
 @lacunas
 
+### 2.6 Companhias dentro e fora do painel (Apêndice A)
+
+Das 23 emissoras identificadas, 14 entram no painel principal. Na tabela a seguir, o N de cada companhia é recalculado a partir do painel; segmento e relação societária são as informações documentais do TCC.
+
+@tabela apA_tabela_1_companhias.csv | Apêndice A, Tabela 1. Companhias do painel principal | G: geração; T: transmissão; D: distribuição. N: observações completas; total de {apa_total|companhias;0;int} companhias e {apa_total|obs;0;int} observações. | Companhia;Código;N;Segmento;Relação societária relevante
+
+As outras nove ficam fora porque nenhuma chega a quatro exercícios elegíveis entre 2020 e 2025. A tabela mostra, para cada uma, quantos anos têm capitalização conciliada, quantos têm os três fundamentos e quantos têm as duas coisas, os motivos de exclusão registrados pelo código e a restrição como descrita no TCC.
+
+@tabela apA_tabela_2_fora_do_painel.csv | Apêndice A, Tabela 2. Companhias fora do painel principal | Contagens na janela 2020–2025. Elegível: capitalização conciliada e três fundamentos de t−1. | Identificador;Código;Capitaliz.;Fundam.;Elegíveis;Motivos no código;Restrição no TCC
+
 ## 3. Variáveis
+
+@tabela tabela_3_variaveis.csv! | Tabela 3. Definição e unidade das variáveis | Fundamentos defasados um ano. ROE e alavancagem winsorizados nos percentis {param|winsor_inf;0;int} e {param|winsor_sup;0;int}. Coluna: nome da variável nos arquivos do painel. | Medida;Definição;Unidade;Equação;Coluna
+
+A tabela a seguir detalha as contas da CVM usadas em cada variável.
 
 | Medida | Definição | Contas da CVM | Unidade |
 | --- | --- | --- | --- |
@@ -89,6 +108,8 @@ O painel não é balanceado: das 14 empresas, nove têm os seis anos. A tabela m
 | EBITDA aproximado | Resultado antes do financeiro e tributos + depreciação e amortização da DVA | 3.05 + 7.04.01 | Reais |
 | Alavancagem | (Empréstimos CP + LP − caixa) / EBITDA (exige EBITDA positivo) | (2.01.04 + 2.02.01 − 1.01.01) | Vezes |
 | Porte | Logaritmo natural do ativo total | 1 | ln de reais |
+
+@tabela apB_tabela_1_rubricas.csv! | Apêndice B, Tabela 1. Rubricas contábeis utilizadas | BPA: balanço patrimonial ativo; BPP: balanço patrimonial passivo; DRE: demonstração do resultado; DVA: demonstração do valor adicionado. A conferência verifica que cada código existe nos extratos da CVM na demonstração indicada. | Conta;Demonstração;Código
 
 Os três fundamentos são do exercício anterior (t−1) ao da capitalização de dezembro (t): o mercado só conhece as demonstrações de um ano no começo do ano seguinte. No consolidado, PL e lucro são os da controladora; a Elektro entra pelo individual em quatro observações.
 

@@ -27,27 +27,40 @@ As fórmulas próprias (álgebra de matrizes) são comparadas com bibliotecas co
 
 ## C. Texto do TCC
 
-`dados/documentos/valores_publicados_tcc.csv` reúne os **465 valores impressos no TCC**: Tabelas 1 e 4 a 8, Tabelas 1 a 4 do Apêndice C e 16 números citados no texto. Cada linha tem a chave do número (gramática em `valores.py` / `valores.R`), as casas decimais, o tipo de formatação e o valor como publicado. Antes de entrar no repositório, cada valor foi localizado no texto do TCC, na mesma ordem em que aparece nas tabelas.
+`dados/documentos/valores_publicados_tcc.csv` reúne os **498 valores impressos no TCC**: Tabelas 1 a 8, Apêndices A, B e C e 16 números citados no texto. As Tabelas 2 e 3 contribuem com os parâmetros que citam (mínimo de quatro anos; percentis 1 e 99), o Apêndice A com o N de cada companhia e os exercícios elegíveis de Copel e Eletrobras, e o Apêndice B com os 12 códigos de conta. Cada linha tem a chave do número (gramática em `valores.py` / `valores.R`), as casas decimais, o tipo de formatação e o valor como publicado. Antes de entrar no repositório, cada valor foi localizado no texto do TCC, na mesma ordem em que aparece nas tabelas.
 
 A conferência recalcula cada valor, formata com as mesmas regras do texto (vírgula decimal, sinal "−", "< 0,0001", asterisco de p < 0,05 antes do arredondamento) e compara os textos.
 
 | Origem | Valores | Coincidem |
 |---|---:|---:|
 | Tabela 1 | 14 | 14 |
+| Tabela 2 | 1 | 1 |
+| Tabela 3 | 2 | 2 |
 | Tabela 4 | 25 | 25 |
 | Tabela 5 | 15 | 15 |
 | Tabela 6 | 6 | 6 |
 | Tabela 7 | 90 | 90 |
 | Tabela 8 | 45 | 45 |
+| Apêndice A, Tabela 1 | 16 | 16 |
+| Apêndice A, Tabela 2 | 2 | 2 |
+| Apêndice B, Tabela 1 | 12 | 12 |
 | Apêndice C, Tabela 1 | 112 | 112 |
 | Apêndice C, Tabela 2 | 48 | 48 |
 | Apêndice C, Tabela 3 | 88 | 88 |
 | Apêndice C, Tabela 4 | 6 | 6 |
 | Texto | 16 | 16 |
-| **Total** | **465** | **465** |
+| **Total** | **498** | **498** |
+
+Além dos valores, a conferência C faz três verificações que não cabem numa comparação de números:
+
+- **Listas do Apêndice A.** As 14 companhias com observações no painel são exatamente as da Tabela 1 do Apêndice A, e as 9 sem nenhuma observação são exatamente as da Tabela 2.
+- **Motivo da exclusão.** Cada uma dessas 9 tem menos de quatro exercícios elegíveis entre 2020 e 2025.
+- **Rubricas do Apêndice B.** Um código só é aceito se a conta existe nos extratos da CVM, na demonstração indicada. Assim a tabela descreve as contas de fato usadas, e não só o texto do TCC.
+
+As tabelas puramente descritivas (Tabelas 2 e 3, Apêndice A e Apêndice B) também são geradas pelo código, em `resultados/<linguagem>/tabelas_tcc/`. O texto delas vem de `config.py` / `config.R` e de `dados/documentos/`; os números e as listas de empresas vêm dos dados.
 
 O resultado item a item fica em `resultados/<linguagem>/conferencia_tcc.csv` e no anexo do relatório em PDF.
 
 ## Equivalência entre as linguagens
 
-Depois de rodar as duas versões, `python scripts/comparar_versoes.py` compara `resultados/python/` com `resultados/r/`, arquivo a arquivo: os 14 arquivos de resultados (valores numéricos com diferença relativa ≤ 10⁻⁹; na prática, da ordem de 10⁻¹³) e as 11 tabelas do TCC (idênticas, célula a célula). A integração contínua (`.github/workflows/reproducao.yml`) roda as duas versões e essa comparação a cada envio.
+Depois de rodar as duas versões, `python scripts/comparar_versoes.py` compara `resultados/python/` com `resultados/r/`, arquivo a arquivo: os 14 arquivos de resultados (valores numéricos com diferença relativa ≤ 10⁻⁹; na prática, da ordem de 10⁻¹³) e as 16 tabelas do TCC em CSV (idênticas, célula a célula). A integração contínua (`.github/workflows/reproducao.yml`) roda as duas versões e essa comparação a cada envio.

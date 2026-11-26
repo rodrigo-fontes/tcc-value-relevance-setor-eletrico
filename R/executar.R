@@ -9,7 +9,7 @@
 # Etapas:
 #   1  construir a base   capitalização, contas, fundamentos e painéis   (capitalizacao.R, contabil.R, painel.R)
 #   2  estimar            modelo principal e 43 especificações          (especificacoes.R, estimacao.R)
-#   3  tabelas            Tabelas 1, 4–8, Apêndice C e Figura 1          (tabelas.R)
+#   3  tabelas            todas as tabelas do TCC e Figura 1             (tabelas.R)
 #   4  conferir           pacote original, fixest e texto do TCC         (conferencia.R)
 #   5  relatório          PDF explicado                                  (relatorio.R)
 #

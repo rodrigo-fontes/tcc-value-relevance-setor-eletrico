@@ -13,7 +13,7 @@ Módulos, na ordem do pipeline:
     painel          eq. (2), defasagem, elegibilidade, mínimo de quatro anos, winsorização
     estimacao       eq. (7): MQO com efeitos fixos, CR1, WCR, Holm, Driscoll–Kraay, R², VIF, FWL
     especificacoes  variáveis alternativas e catálogo de 44 modelos
-    tabelas         Tabelas 1, 4–8, Apêndice C e Figura 1
+    tabelas         todas as tabelas do TCC (1–8, Apêndices A, B e C) e Figura 1
     valores         chave → número formatado como no TCC
     conferencia     pacote original, statsmodels/linearmodels e texto do TCC
     relatorio       relatório explicado em PDF

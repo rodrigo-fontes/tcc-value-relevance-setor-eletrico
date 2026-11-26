@@ -1,0 +1,10 @@
+identificador,ticker,restricao_tcc
+AESO3,AESO3,Cotação por classe não conciliada
+CEEB3,CEEB3,Cotação preferencial ausente
+CEED3,CEED3,Classes e menos de quatro anos completos
+COCE3,COCE3,"Classes, tesouraria ou cotação não conciliadas"
+CPLE3,CPLE3,"Conciliação incompleta das subclasses acionárias; apenas dois exercícios elegíveis, abaixo do mínimo de quatro"
+ELET3,ELET3,"Conciliação incompleta das subclasses acionárias; apenas dois exercícios elegíveis, abaixo do mínimo de quatro"
+EMAE3,EMAE3,Cotação insuficiente
+ENBR3 (EDP),ENBR3,Tesouraria divergente e cotação insuficiente
+SRNA3,SRNA3,Capital e cotações insuficientes

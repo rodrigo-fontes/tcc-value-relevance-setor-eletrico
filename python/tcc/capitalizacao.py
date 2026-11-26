@@ -127,7 +127,7 @@ def quantidades_dfp(emp, ano, r, escala, ff, d, tes, notas):  # caminho principa
         on, pn = unicos.iloc[0].tolist()                    # adota a quantidade emitida do FRE
 
     # 3) Tesouraria: o saldo final no FRE precisa coincidir com o da DFP
-    for especie, alvo in (("Ordinária", "on"), ("Preferencial", "pn")):
+    for especie, alvo in (("Ordinária", "on"), ("Preferencial", "pn")):  # ON e PN, uma de cada vez
         vals = saldos_tesouraria(tes, especie)              # saldos distintos no FRE
         atual = ton if alvo == "on" else tpn                # saldo da DFP
         if len(vals) == 1:                                  # um saldo no FRE
@@ -142,7 +142,7 @@ def quantidades_dfp(emp, ano, r, escala, ff, d, tes, notas):  # caminho principa
             status = "excluir_divergencia_tesouraria_FRE"     # FRE ambíguo: exclui
 
     # 4) Cemig 2020: quantidades conferidas na nota 26 das demonstrações (Cemig, 2021)
-    if emp.ticker == "CMIG3" and ano == 2020:
+    if emp.ticker == "CMIG3" and ano == 2020:                 # só a Cemig em 2020
         q = C.CEMIG_2020                                    # valores do documento original
         on, pn, ton, tpn = q["on"], q["pn"], q["ton"], q["tpn"]  # substitui pelas quantidades do documento
         status = "ok"                                         # observação válida

@@ -43,6 +43,8 @@ São as 8 lacunas do painel não balanceado (9 das 14 empresas têm os seis anos
 
 ## 4. Empresas fora do painel principal (Apêndice A, Tabela 2)
 
+O código gera esta tabela em `tabelas_tcc/apA_tabela_2_fora_do_painel.csv`, com as contagens de anos elegíveis e os motivos de exclusão registrados, e confere que a lista é a mesma do TCC.
+
 | Emissora | Restrição |
 |---|---|
 | AESO3 | Cotação por classe não conciliada |

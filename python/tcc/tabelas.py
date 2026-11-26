@@ -9,12 +9,17 @@ para vírgula). "*" marca p WCR < 0,05 ANTES do arredondamento.
 | Arquivo                                   | No TCC                                             |
 |-------------------------------------------|----------------------------------------------------|
 | tabela_1_cobertura.csv                    | Tabela 1. Cobertura anual dos painéis              |
-| tabela_4_descritivas.csv                  | Tabela 4. Estatísticas descritivas                 |
+| tabela_2_etapas.csv                       | Tabela 2. Etapas (+ módulo que executa cada uma)   |
+| tabela_3_variaveis.csv                    | Tabela 3. Definição e unidade das variáveis        |
+| tabela_4_descritivas.csv                 | Tabela 4. Estatísticas descritivas                 |
 | tabela_5_coeficientes.csv                 | Tabela 5. Coeficientes e inferência agrupada       |
 | tabela_6_cr1_wcr_holm.csv                 | Tabela 6. p CR1 e WCR (+ Holm, citado no texto)    |
 | interpretacao_efeitos.csv                 | Texto: −6,16%, −9,62% e +5,04% (eq. 8)             |
 | tabela_7_sensibilidade.csv (+ contagem)   | Tabela 7. Matriz de sensibilidade (18 linhas)      |
 | tabela_8_especificacoes.csv               | Tabela 8. Especificações alternativas              |
+| apA_tabela_1_companhias.csv               | Apêndice A, Tabela 1 (N recalculado do painel)     |
+| apA_tabela_2_fora_do_painel.csv           | Apêndice A, Tabela 2 (contagens + restrição)       |
+| apB_tabela_1_rubricas.csv                 | Apêndice B, Tabela 1. Rubricas contábeis           |
 | apC_tabela_1..4                           | Apêndice C, Tabelas 1 a 4                          |
 | diagnosticos_texto.json                   | R², VIF, concentração da CEB, dívida ampliada      |
 | figura_1.png                              | Figura 1. Retirada de cada empresa                 |
@@ -161,6 +166,9 @@ def gerar(saida):                                             # gera todas as ta
                        p_DK2=fp(Cf.loc[("principal", v), "p_DK2"])) for v in V]  # (continuação)
                  ).to_csv(tab / "apC_tabela_4_driscoll_kraay.csv", index=False)  # grava
 
+    # Tabelas descritivas (texto e códigos) e as do Apêndice A
+    tabelas_descritivas(saida)                                # Tabelas 2 e 3, Apêndice A (1 e 2), Apêndice B (1)
+
     # Números citados no texto do TCC
     dg = json.loads((saida / "diagnosticos.json").read_text())  # VIF
     inf = pd.read_csv(saida / "influencia_observacoes.csv")   # frações por observação
@@ -183,6 +191,60 @@ def gerar(saida):                                             # gera todas as ta
     fig.savefig(saida / "figura_1.png", dpi=300)              # grava o PNG
     plt.close(fig)                                            # libera memória
     return t7, cont                                           # Tabela 7 e contagens
+
+
+def elegibilidade(saida):                                     # empresa × janela principal
+    """Por empresa, na janela do painel principal (2020–2025): anos com capitalização conciliada,
+    anos com os três fundamentos de t−1, exercícios elegíveis (os dois ao mesmo tempo), anos no
+    painel e os motivos de exclusão registrados (do mais ao menos frequente). É a base das duas tabelas do Apêndice A."""
+    d = pd.read_csv(saida / "decisoes_amostra.csv")           # uma linha por empresa-ano (todas as 23 emissoras)
+    d = d[d.ano.between(C.ANO_INICIO_PRINCIPAL, C.ANO_FIM)].copy()  # janela 2020–2025
+    d["capitalizacao_ok"] = d.status.eq("ok")                 # capitalização conciliada
+    d["fundamentos_ok"] = d[C.FUNDAMENTOS].notna().all(axis=1)  # ROE, AL e PORTE de t−1 disponíveis
+    d["elegivel"] = d.capitalizacao_ok & d.fundamentos_ok      # entra antes do mínimo de quatro anos
+    motivo = lambda s: ";".join(s[s.ne("ok")].value_counts().index)  # códigos de exclusão, do mais ao menos frequente
+    return d.groupby("ticker").agg(anos=("ano", "size"), capitalizacao=("capitalizacao_ok", "sum"),  # contagens por empresa
+                                   fundamentos=("fundamentos_ok", "sum"), elegiveis=("elegivel", "sum"),  # (continuação)
+                                   no_painel=("incluido_principal", "sum"), motivo=("status", motivo))  # (fim)
+
+
+# Tradução dos códigos de exclusão gravados por tcc.capitalizacao
+MOTIVOS = {"excluir_preco_classe_ausente": "sem cotação de dezembro da classe",  # P da mesma classe ausente
+           "excluir_capital_ambiguo_ou_ausente": "capital ambíguo ou ausente na CVM",  # Q não determinada
+           "excluir_tesouraria_nao_documentada": "tesouraria não documentada",  # T ausente
+           "excluir_subclasses_ou_tesouraria": "subclasses (PNA/PNB) ou tesouraria sem repartição",  # Q por classe indeterminada
+           "excluir_divergencia_tesouraria_DFP_FRE": "tesouraria divergente entre DFP e FRE",  # T inconsistente
+           "excluir_divergencia_tesouraria_FRE": "tesouraria ambígua no FRE",  # T inconsistente
+           "excluir_tesouraria_evento_posterior": "evento societário com tesouraria",  # evento desfeito + T
+           "excluir_quantidade_invalida": "quantidade em circulação não positiva"}  # Q − T ≤ 0
+
+
+def tabelas_descritivas(saida):                               # tabelas sem estimação
+    """Tabelas 2 e 3 do TCC, Apêndice A (Tabelas 1 e 2) e Apêndice B (Tabela 1).
+    O texto vem de config (o mesmo do TCC); os números e as listas de empresas vêm dos dados."""
+    tab = saida / "tabelas_tcc"                               # pasta de saída
+    pd.DataFrame(C.ETAPAS_TCC, columns=["etapa", "procedimento", "modulo"]  # Tabela 2 + módulo que executa
+                 ).assign(modulo=lambda t: "tcc." + t.modulo).to_csv(tab / "tabela_2_etapas.csv", index=False)  # grava
+    pd.DataFrame(C.VARIAVEIS_TCC, columns=["medida", "definicao", "unidade", "equacao", "coluna"]  # Tabela 3
+                 ).to_csv(tab / "tabela_3_variaveis.csv", index=False)  # grava
+
+    el = elegibilidade(saida)                                 # contagens por empresa (2020–2025)
+    d = pd.read_csv(saida / "painel_principal.csv")           # 76 observações
+    car = pd.read_csv(C.DADOS / "documentos" / "caracterizacao_empresas.csv")  # segmento e relação societária (TCC)
+    a1 = car.rename(columns={"codigo": "ticker", "segmento_G_geracao_T_transmissao_D_distribuicao": "segmento"})  # nomes curtos
+    a1["N"] = a1.ticker.map(d.groupby("ticker").size())       # N recalculado a partir do painel (não o digitado)
+    a1[["companhia", "ticker", "N", "segmento", "relacao_societaria"]].to_csv(  # colunas do Apêndice A, Tabela 1
+        tab / "apA_tabela_1_companhias.csv", index=False)     # grava
+
+    fora = el[el.no_painel.eq(0)].reset_index()               # emissoras sem nenhum ano no painel principal
+    fora["motivos_no_codigo"] = fora.motivo.map(lambda m: "; ".join(MOTIVOS[x] for x in m.split(";") if x))  # motivos legíveis
+    tcc = pd.read_csv(C.DADOS / "documentos" / "companhias_fora_painel_tcc.csv")  # restrições como escritas no TCC
+    fora = fora.merge(tcc, on="ticker", how="outer")          # outer: uma empresa só de um lado aparece
+    fora[["identificador", "ticker", "capitalizacao", "fundamentos", "elegiveis", "motivos_no_codigo", "restricao_tcc"]  # colunas
+         ].to_csv(tab / "apA_tabela_2_fora_do_painel.csv", index=False)  # grava
+
+    pd.DataFrame(C.RUBRICAS, columns=["conta", "demonstracao", "codigo"]  # Apêndice B, Tabela 1
+                 ).to_csv(tab / "apB_tabela_1_rubricas.csv", index=False)  # grava
 
 
 def desenhar_figura1(axs, coef, d):                           # Figura 1

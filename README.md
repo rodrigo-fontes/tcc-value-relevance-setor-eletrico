@@ -5,11 +5,11 @@
 [![Texto: CC BY 4.0](https://img.shields.io/badge/texto-CC%20BY%204.0-lightgrey.svg)](LICENSE-docs.md)
 [![Python 3.12+](https://img.shields.io/badge/Python-3.12%2B-3776AB.svg)](python/)
 [![R 4.2+](https://img.shields.io/badge/R-4.2%2B-276DC3.svg)](R/)
-[![Reprodução: 465/465](https://img.shields.io/badge/confer%C3%AAncia%20com%20o%20TCC-465%2F465-brightgreen.svg)](docs/conferencia.md)
+[![Reprodução: 498/498](https://img.shields.io/badge/confer%C3%AAncia%20com%20o%20TCC-498%2F498-brightgreen.svg)](docs/conferencia.md)
 
 Pacote de reprodução do Trabalho de Conclusão de Curso de **Rodrigo Pereira Fontes**, com orientação do Prof. **Marco Antonio Alves de Souza Junior** (Esalq/USP). Especialização (MBA) em Finanças e Controladoria, USP/Esalq, 2026.
 
-O repositório refaz, em **Python** e em **R**, todo o caminho entre os dados públicos da CVM e da B3 e cada número do TCC: 465 valores de tabelas e de texto, todos conferidos automaticamente.
+O repositório refaz, em **Python** e em **R**, todo o caminho entre os dados públicos da CVM e da B3 e cada número e cada tabela do TCC: 498 valores de tabelas e de texto, todos conferidos automaticamente.
 
 ---
 
@@ -58,7 +58,7 @@ N = 76; G = 14; K = 22; R² intra-grupo = 0,2130; R² parcial de duas vias = 0,2
 
 **Leitura.** No modelo principal, H1 foi contrariada (ROE maior associado a menor capitalização), e H2 e H3 receberam apoio. Nas 18 verificações da matriz de sensibilidade (Tabela 7), o ROE foi significativo pelo WCR em 12, a alavancagem em 13 e o porte em 15. A rentabilidade perdeu significância com ln(PL), com o ROA e sem a CEB, que concentra 54,55% da variação que identifica o coeficiente do ROE. Os resultados medem associação, não causalidade.
 
-> Detalhes de cada etapa, com as equações e as referências: [docs/metodologia.md](docs/metodologia.md). Relatório completo gerado pelos scripts: [docs/relatorio_reproducao.pdf](docs/relatorio_reproducao.pdf).
+> Detalhes de cada etapa, com as equações e as referências: [docs/metodologia.md](docs/metodologia.md). Por que cada escolha foi feita, com a alternativa e onde ela foi testada: [docs/decisoes_de_projeto.md](docs/decisoes_de_projeto.md). Relatório completo gerado pelos scripts: [docs/relatorio_reproducao.pdf](docs/relatorio_reproducao.pdf).
 
 ---
 
@@ -104,8 +104,8 @@ Nenhuma etapa acessa a internet. As cinco etapas são as mesmas nas duas linguag
 |---|---|---|
 | 1. Construir a base | Concilia quantidade de ações (DFP × FRE), tesouraria e preço da mesma classe; calcula a capitalização (eq. 1), os fundamentos (eqs. 3–6) e os painéis | Dados; Tabelas 1–3; Apêndices A e B |
 | 2. Estimar | Modelo principal e mais 43 especificações; CR1, WCR, Holm, Driscoll–Kraay, R², VIF e concentração (FWL) | Tabelas 5–8; Apêndice C |
-| 3. Tabelas | Gera as Tabelas 1, 4–8, as Tabelas 1–4 do Apêndice C e a Figura 1 | Resultados |
-| 4. Conferir | Compara com o pacote original, com bibliotecas independentes e com os 465 valores do texto | Apêndice B |
+| 3. Tabelas | Gera todas as tabelas do TCC (1 a 8 e Apêndices A, B e C) e a Figura 1 | Resultados; Apêndices |
+| 4. Conferir | Compara com o pacote original, com bibliotecas independentes e com os 498 valores do texto | Apêndice B |
 | 5. Relatório | PDF de ~27 páginas, com cada etapa explicada | — |
 
 ---
@@ -126,7 +126,7 @@ flowchart LR
     D --> E[Modelo com efeitos fixos<br/>eq. 7]
     E --> F[CR1 · WCR 2^G · Holm · DK]
     F --> G[44 especificações<br/>Tabelas 5–8 · Apêndice C]
-    G --> H[Conferência<br/>465/465 valores]
+    G --> H[Conferência<br/>498/498 valores]
     H --> I[Relatório em PDF]
 ```
 
@@ -160,6 +160,7 @@ flowchart LR
 ├── coleta/                       scripts originais que baixaram os extratos complementares
 ├── docs/
 │   ├── metodologia.md            equações, regras e correspondência código ↔ TCC
+│   ├── decisoes_de_projeto.md    por que cada escolha foi feita (metodologia, dados, engenharia)
 │   ├── decisoes.md               casos documentados de conciliação
 │   ├── conferencia.md            como os resultados são conferidos
 │   ├── referencias.md            referencial teórico e fontes
@@ -181,8 +182,8 @@ Cada execução termina com três conferências independentes ([docs/conferencia
 |---|---|---|
 | A | Saídas × pacote original que gerou o TCC (37 modelos, 111 coeficientes) | Idênticas; contagens do bootstrap exatas |
 | B | Fórmulas próprias × statsmodels e linearmodels (Python) ou fixest (R) | Diferença máxima de 10⁻¹⁰ |
-| — | Versão Python × versão R (`scripts/comparar_versoes.py`) | 25 de 25 arquivos idênticos |
-| C | Os 465 valores impressos no TCC, recalculados e formatados com as mesmas casas decimais | 465 de 465 |
+| — | Versão Python × versão R (`scripts/comparar_versoes.py`) | 30 de 30 arquivos idênticos |
+| C | Os 498 valores impressos no TCC, recalculados e formatados com as mesmas casas decimais; listas de empresas do Apêndice A | 498 de 498 |
 
 ---
 

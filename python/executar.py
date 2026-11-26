@@ -11,7 +11,7 @@ Uso (na raiz do repositório):
 Etapas:
     1  construir a base      capitalização, contas, fundamentos, painéis       (tcc.capitalizacao, contabil, painel)
     2  estimar               modelo principal e 43 especificações             (tcc.especificacoes, estimacao)
-    3  tabelas               Tabelas 1, 4–8, Apêndice C e Figura 1            (tcc.tabelas)
+    3  tabelas               todas as tabelas do TCC e Figura 1               (tcc.tabelas)
     4  conferir              pacote original, bibliotecas e texto do TCC      (tcc.conferencia)
     5  relatório             PDF explicado, com a conferência item a item     (tcc.relatorio)
 

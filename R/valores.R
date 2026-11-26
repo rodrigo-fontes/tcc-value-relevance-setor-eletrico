@@ -22,6 +22,8 @@ carregar_resultados <- function(saida = RESULTADOS) {      # lê as tabelas usad
                      function(k) json_num(file.path(saida, "funil.json"), k))                 # funil
   .res$c7 <- sapply(c("rentabilidade", "alavancagem", "porte"),  # contagens da Tabela 7
                     function(k) json_num(file.path(saida, "tabelas_tcc", "tabela_7_contagem.json"), k))   # 12/13/15
+  .res$el <- elegibilidade(saida)                         # contagens por empresa (Apêndice A)
+  .res$rub <- rubricas_nos_dados()                         # rubricas presentes nos extratos (Apêndice B)
   base <- estimar(.res$d, "principal", wcr = FALSE, dk = FALSE)                               # para o VIF
   .res$vif <- setNames(vif_intra(base$F, base$X[, base$pos])$vif, FUNDAMENTOS)  # VIF intra
   invisible(TRUE)                                             # carregado
@@ -54,11 +56,34 @@ valor <- function(chave) {                                 # chave → valor (n�
     p <- if (k[2] == "principal") .res$d else .res$h          # painel escolhido
     return(if (k[3] == "total") nrow(p) else sum(p$ano == as.integer(k[3])))  # N ou empresas do ano
   }
+  if (k[1] == "apa_n") return(sum(.res$d$ticker == k[2]))  # observações da empresa no painel (Apêndice A, Tabela 1)
+  if (k[1] == "apa_total") return(if (k[2] == "companhias") length(unique(.res$d$ticker)) else nrow(.res$d))  # 14 e 76
+  if (k[1] == "apa_elegiveis") return(.res$el[k[2], "elegiveis"])  # exercícios elegíveis (Apêndice A, Tabela 2)
+  if (k[1] == "param") return(switch(k[2], winsor_inf = 100 * PERCENTIS_WINSOR[1],  # percentis 1 e 99
+                                     winsor_sup = 100 * PERCENTIS_WINSOR[2], min_exercicios = MIN_EXERCICIOS))  # mínimo de quatro anos
+  if (k[1] == "rubrica") return(if (k[2] %in% names(.res$rub)) .res$rub[[k[2]]] else "")  # código, se a conta existe nos dados
   stop("chave desconhecida: ", chave)                         # erro explícito
 }
 
+# Código de cada rubrica do Apêndice B, mantido só se a conta existe nos extratos da CVM na
+# demonstração indicada (assim a conferência prova que a tabela descreve os dados usados).
+rubricas_nos_dados <- function() {                         # conta → código, só se presente
+  arqs <- c(file.path(DADOS, "cvm", "contas_cvm.csv"),       # extrato principal
+            sort(Sys.glob(file.path(DADOS, "cvm_complementar", "complementos_*.csv"))))  # complementares (1.01.02)
+  pares <- unique(do.call(rbind, lapply(arqs, function(a) {  # pares (código, demonstração) presentes
+    x <- read.csv(a, colClasses = "character", encoding = "UTF-8")[, c("CD_CONTA", "GRUPO_DFP")]  # só as duas colunas
+    data.frame(cod = x$CD_CONTA, dem = sub("^[^-]* - ", "", x$GRUPO_DFP))  # "DF Consolidado - Balanço ..." → "Balanço ..."
+  })))
+  chave <- paste(pares$cod, pares$dem)                       # chave composta
+  ok <- paste(RUBRICAS$codigo, DEMONSTRACOES[RUBRICAS$demonstracao]) %in% chave  # rubrica encontrada?
+  setNames(as.list(RUBRICAS$codigo[ok]), RUBRICAS$conta[ok]) # conta → código
+}
+
+EXTENSO <- c("zero", "um", "dois", "três", "quatro", "cinco", "seis")  # números que o TCC escreve por extenso
+
 formatar <- function(x, dec, tipo) {                       # formato do TCC
-  if (tipo == "ngk") return(x)                             # texto pronto
+  if (tipo %in% c("ngk", "texto")) return(x)               # texto pronto (N/G/K ou código de conta)
+  if (tipo == "extenso") return(EXTENSO[as.integer(x) + 1]) # inteiro por extenso (ex.: 2 → "dois")
   if (tipo == "int") return(as.character(as.integer(round(x))))            # inteiro
   if (tipo %in% c("p", "p_estrela") && x < 1e-4) return("< 0,0001")          # p muito pequeno
   if (tipo == "abs") x <- abs(x)                           # ex.: "6,16% menos"

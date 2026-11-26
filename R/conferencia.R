@@ -3,7 +3,7 @@
 # =============================================================================
 #   A. resultados/ × referencia/ (pacote original, set/2026): tolerância 10⁻⁸ e contagens do WCR exatas
 #   B. resultados/ × fixest (efeitos fixos de empresa e ano, cluster por empresa) — opcional
-#   C. resultados/ × os 465 valores impressos no TCC (mesmas casas decimais)
+#   C. resultados/ × os 498 valores impressos no TCC (mesmas casas decimais) e listas do Apêndice A
 # Equivale a python/tcc/conferencia.py (que usa statsmodels e linearmodels no item B).
 # =============================================================================
 
@@ -67,8 +67,8 @@ conferir <- function(saida = RESULTADOS) {                 # roda A, B e C; devo
 
   cat("\nC. Resultados × valores publicados no TCC\n")        # título
   carregar_resultados(saida)                               # tabelas usadas pelas chaves
-  pub <- read.csv(file.path(DADOS, "documentos", "valores_publicados_tcc.csv"), colClasses = "character",  # 465 valores, como texto
-                  encoding = "UTF-8", check.names = FALSE) # 465 valores, como texto
+  pub <- read.csv(file.path(DADOS, "documentos", "valores_publicados_tcc.csv"), colClasses = "character",  # valores publicados, como texto
+                  encoding = "UTF-8", check.names = FALSE) # valores publicados, como texto
   pub$calculado <- mapply(function(c, dc, t) formatar(valor(c), dc, t), pub$chave, pub$decimais, pub$tipo)   # recalcula
   pub$confere <- pub$calculado == pub$publicado            # comparação do texto formatado
   gravar(pub, file.path(saida, "conferencia_tcc.csv"))        # grava conferencia_tcc.csv
@@ -78,6 +78,16 @@ conferir <- function(saida = RESULTADOS) {                 # roda A, B e C; devo
     cat(sprintf("  [%s] %s %d de %d valores\n", if (ok) "ok" else "FALHA", format(t, width = 42), sum(g$confere), nrow(g)))  # linha do relatório
     if (!ok) { falhas <- c(falhas, t); print(g[!g$confere, c("linha", "item", "publicado", "calculado")]) }  # mostra as divergências
   }
+  # Apêndice A: as 14 companhias do painel e as 9 fora dele são exatamente as do TCC, e cada uma
+  # das 9 tem menos de quatro exercícios elegíveis (o motivo de ficar fora)
+  el <- elegibilidade(saida)                               # 23 emissoras
+  dentro <- el$ticker[el$no_painel > 0]; fora <- el$ticker[el$no_painel == 0]   # dentro e fora do painel
+  tcc_dentro <- ler(file.path(DADOS, "documentos", "caracterizacao_empresas.csv"))$codigo  # Apêndice A, Tabela 1
+  tcc_fora <- ler(file.path(DADOS, "documentos", "companhias_fora_painel_tcc.csv"))$ticker  # Apêndice A, Tabela 2
+  ok <- setequal(dentro, tcc_dentro) && setequal(fora, tcc_fora) && all(el[fora, "elegiveis"] < MIN_EXERCICIOS)  # três testes
+  cat(sprintf("  [%s] %s %d no painel e %d fora, como no TCC\n", if (ok) "ok" else "FALHA",  # linha do relatório
+              format("Apêndice A: listas de empresas", width = 42), length(dentro), length(fora)))  # (continuação)
+  if (!ok) falhas <- c(falhas, "Apêndice A: listas de empresas")  # registra
   cat("\n", if (!length(falhas)) "TUDO CONFERIDO." else paste(length(falhas), "FALHA(S):", paste(falhas, collapse = "; ")), "\n")  # resultado final
   !length(falhas)                                          # TRUE se tudo coincidir
 }

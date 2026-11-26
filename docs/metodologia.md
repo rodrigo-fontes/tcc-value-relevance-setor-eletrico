@@ -179,7 +179,7 @@ Cada especificação responde a uma pergunta econômica definida antes de olhar 
 | Eq. (2), defasagem, filtros, winsorização, funil | `painel.py` | `painel.R` |
 | Eq. (7), CR1, WCR, DK, Holm, R², VIF, FWL | `estimacao.py` | `estimacao.R` |
 | Especificações alternativas (Tabelas 7, 8; Ap. C) | `especificacoes.py` | `especificacoes.R` |
-| Tabelas 1, 4–8, Ap. C, Figura 1; eq. (8) | `tabelas.py` | `tabelas.R` |
+| Tabelas 1–8, Apêndices A, B e C, Figura 1; eq. (8) | `tabelas.py` | `tabelas.R` |
 | Números citados no texto | `valores.py` | `valores.R` |
 | Apêndice B (reprodução) | `conferencia.py` | `conferencia.R` |
 | Relatório em PDF | `relatorio.py` | `relatorio.R` |

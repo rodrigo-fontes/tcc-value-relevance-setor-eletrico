@@ -13,6 +13,9 @@ Tabela 1,2025,Principal,cobertura|principal|2025,0,int,13
 Tabela 1,2025,Histórico,cobertura|historico|2025,0,int,13
 Tabela 1,Total,Principal,cobertura|principal|total,0,int,76
 Tabela 1,Total,Histórico,cobertura|historico|total,0,int,97
+Tabela 2,Painel,Mínimo de anos por empresa,param|min_exercicios,0,extenso,quatro
+Tabela 3,Nota,Winsorização: percentil inferior,param|winsor_inf,0,int,1
+Tabela 3,Nota,Winsorização: percentil superior,param|winsor_sup,0,int,99
 Tabela 4,Valor de mercado (R$ bi),Média,desc|media|mcap_bi,2,num,"18,17"
 Tabela 4,Valor de mercado (R$ bi),Desvio-padrão,desc|dp|mcap_bi,2,num,"14,20"
 Tabela 4,Valor de mercado (R$ bi),Mínimo,desc|min|mcap_bi,2,num,"0,74"
@@ -194,6 +197,36 @@ Tabela 8,Dívida ampliada: dl_ampla_lag,p WCR,p_WCR|divida_ampla|dl_ampla_lag,4,
 Tabela 8,Dívida ampliada: size_lag,Coef.,coef|divida_ampla|size_lag,4,num,"0,4881"
 Tabela 8,Dívida ampliada: size_lag,p CR1,p_CR1|divida_ampla|size_lag,4,p,"0,0118"
 Tabela 8,Dívida ampliada: size_lag,p WCR,p_WCR|divida_ampla|size_lag,4,p,"0,0028"
+"Apêndice A, Tabela 1",AURE3,N,apa_n|AURE3,0,int,4
+"Apêndice A, Tabela 1",CEBR3,N,apa_n|CEBR3,0,int,6
+"Apêndice A, Tabela 1",CLSC3,N,apa_n|CLSC3,0,int,6
+"Apêndice A, Tabela 1",CMIG3,N,apa_n|CMIG3,0,int,6
+"Apêndice A, Tabela 1",CPFE3,N,apa_n|CPFE3,0,int,6
+"Apêndice A, Tabela 1",EGIE3,N,apa_n|EGIE3,0,int,6
+"Apêndice A, Tabela 1",EKTR3,N,apa_n|EKTR3,0,int,4
+"Apêndice A, Tabela 1",ENEV3,N,apa_n|ENEV3,0,int,6
+"Apêndice A, Tabela 1",EQTL3,N,apa_n|EQTL3,0,int,5
+"Apêndice A, Tabela 1",GEPA3,N,apa_n|GEPA3,0,int,4
+"Apêndice A, Tabela 1",LIGT3,N,apa_n|LIGT3,0,int,5
+"Apêndice A, Tabela 1",NEOE3,N,apa_n|NEOE3,0,int,6
+"Apêndice A, Tabela 1",REDE3,N,apa_n|REDE3,0,int,6
+"Apêndice A, Tabela 1",TAEE3,N,apa_n|TAEE3,0,int,6
+"Apêndice A, Tabela 1",Nota,Total de companhias,apa_total|companhias,0,int,14
+"Apêndice A, Tabela 1",Nota,Total de observações,apa_total|obs,0,int,76
+"Apêndice A, Tabela 2",CPLE3,Exercícios elegíveis,apa_elegiveis|CPLE3,0,extenso,dois
+"Apêndice A, Tabela 2",ELET3,Exercícios elegíveis,apa_elegiveis|ELET3,0,extenso,dois
+"Apêndice B, Tabela 1",Ativo total,Código (BPA),rubrica|Ativo total,0,texto,1
+"Apêndice B, Tabela 1",Caixa e equivalentes,Código (BPA),rubrica|Caixa e equivalentes,0,texto,1.01.01
+"Apêndice B, Tabela 1",Aplicações financeiras (sensibilidade),Código (BPA),rubrica|Aplicações financeiras (sensibilidade),0,texto,1.01.02
+"Apêndice B, Tabela 1",Empréstimos e financiamentos de curto prazo,Código (BPP),rubrica|Empréstimos e financiamentos de curto prazo,0,texto,2.01.04
+"Apêndice B, Tabela 1",Empréstimos e financiamentos de longo prazo,Código (BPP),rubrica|Empréstimos e financiamentos de longo prazo,0,texto,2.02.01
+"Apêndice B, Tabela 1",Patrimônio líquido total,Código (BPP),rubrica|Patrimônio líquido total,0,texto,2.03
+"Apêndice B, Tabela 1",Participação dos não controladores no patrimônio,Código (BPP),rubrica|Participação dos não controladores no patrimônio,0,texto,2.03.09
+"Apêndice B, Tabela 1",Resultado antes do financeiro e dos tributos,Código (DRE),rubrica|Resultado antes do financeiro e dos tributos,0,texto,3.05
+"Apêndice B, Tabela 1",Lucro líquido total,Código (DRE),rubrica|Lucro líquido total,0,texto,3.11
+"Apêndice B, Tabela 1",Lucro atribuível à controladora,Código (DRE),rubrica|Lucro atribuível à controladora,0,texto,3.11.01
+"Apêndice B, Tabela 1",Lucro atribuível aos não controladores,Código (DRE),rubrica|Lucro atribuível aos não controladores,0,texto,3.11.02
+"Apêndice B, Tabela 1","Depreciação, amortização e exaustão",Código (DVA),"rubrica|Depreciação, amortização e exaustão",0,texto,7.04.01
 "Apêndice C, Tabela 1",AURE3,N/G/K,ngk|excluir_AURE3,0,ngk,72/13/21
 "Apêndice C, Tabela 1",AURE3,R² intra,mod|R2_intra|excluir_AURE3,3,num,"0,248"
 "Apêndice C, Tabela 1",AURE3,ROE coef.,coef|excluir_AURE3|roe_lag,3,num,"−0,608"

@@ -42,8 +42,9 @@ Contas em `contas_cvm.csv` (Apêndice B, Tabela 1 do TCC):
 | Arquivo | Conteúdo |
 |---|---|
 | `capital_cpfl_documentado.csv` | CPFL, 2012 e 2014–2019: `ano`, `emitidas`, `tesouraria`, `url` (DF original no formulário 6-K da SEC) |
-| `caracterizacao_empresas.csv` | As 14 empresas do painel: nome, código, N, segmento (G, T, D) e relação societária (Apêndice A, Tabela 1) |
-| `valores_publicados_tcc.csv` | Os 465 valores impressos no TCC: `tabela`, `linha`, `item`, `chave`, `decimais`, `tipo`, `publicado` (ver [docs/conferencia.md](../docs/conferencia.md)) |
+| `caracterizacao_empresas.csv` | As 14 empresas do painel: nome, código, N, segmento (G, T, D) e relação societária (Apêndice A, Tabela 1). O N é recalculado pelo código e conferido |
+| `companhias_fora_painel_tcc.csv` | As 9 emissoras fora do painel e a restrição como descrita no TCC (Apêndice A, Tabela 2): `identificador`, `ticker`, `restricao_tcc` |
+| `valores_publicados_tcc.csv` | Os 498 valores impressos no TCC: `tabela`, `linha`, `item`, `chave`, `decimais`, `tipo`, `publicado` (ver [docs/conferencia.md](../docs/conferencia.md)) |
 
 ## `cvm_complementar/` — extratos adicionais da DFP
 

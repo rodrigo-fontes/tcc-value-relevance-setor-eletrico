@@ -6,7 +6,8 @@ A. Pacote original    resultados/ × referencia/ (saídas do pacote Base_final_T
                       com tolerância relativa de 10⁻⁸ e contagens do bootstrap EXATAS.
 B. Bibliotecas        coeficientes, CR1, R² e Driscoll–Kraay recalculados por statsmodels
                       (OLS com indicadoras) e linearmodels (PanelOLS), como declarado no TCC.
-C. Texto do TCC       os 465 valores impressos no trabalho (dados/documentos/valores_publicados_tcc.csv)
+C. Texto do TCC       os 498 valores impressos no trabalho (dados/documentos/valores_publicados_tcc.csv)
+                      e as listas de empresas do Apêndice A
                       recalculados e formatados com as mesmas casas decimais.
 
 `executar()` devolve True se tudo coincidir.
@@ -127,7 +128,7 @@ def bibliotecas(R: Registro, saida):                          # conferência B
 def texto_do_tcc(R: Registro, saida):                         # conferência C
     """C. Cada valor impresso no TCC, recalculado com as mesmas casas decimais."""
     print("\nC. Resultados × valores publicados no TCC")      # título
-    pub = pd.read_csv(cfg.DADOS / "documentos" / "valores_publicados_tcc.csv", dtype=str, keep_default_na=False)  # 465 valores publicados
+    pub = pd.read_csv(cfg.DADOS / "documentos" / "valores_publicados_tcc.csv", dtype=str, keep_default_na=False)  # 498 valores publicados
     pub["calculado"] = [formatar(valor(c, saida), dc, t) for c, dc, t in zip(pub.chave, pub.decimais, pub.tipo)]  # recalcula e formata
     pub["confere"] = pub.calculado == pub.publicado         # comparação do texto formatado
     pub.to_csv(saida / "conferencia_tcc.csv", index=False)    # grava conferencia_tcc.csv
@@ -137,6 +138,24 @@ def texto_do_tcc(R: Registro, saida):                         # conferência C
         if not ok:                                            # falhou
             R.falhas.append(tab)                              # registra
             print(g[~g.confere][["linha", "item", "publicado", "calculado"]].to_string(index=False))  # mostra as divergências
+    listas_do_apendice_a(R, saida)                            # quem está dentro e fora do painel
+
+
+def listas_do_apendice_a(R: Registro, saida):                 # conferência das listas de empresas
+    """Apêndice A: as 14 companhias do painel e as 9 fora dele são exatamente as do TCC,
+    e cada uma das 9 tem menos de quatro exercícios elegíveis (o motivo de ficar fora)."""
+    from .tabelas import elegibilidade                        # contagens por empresa
+    el = elegibilidade(saida)                                 # 23 emissoras
+    dentro = set(el.index[el.no_painel.gt(0)])                # empresas com algum ano no painel
+    fora = set(el.index[el.no_painel.eq(0)])                  # empresas sem nenhum ano
+    tcc_dentro = set(pd.read_csv(cfg.DADOS / "documentos" / "caracterizacao_empresas.csv").codigo)  # Apêndice A, Tabela 1
+    tcc_fora = set(pd.read_csv(cfg.DADOS / "documentos" / "companhias_fora_painel_tcc.csv").ticker)  # Apêndice A, Tabela 2
+    ok = dentro == tcc_dentro and fora == tcc_fora and bool((el.loc[sorted(fora), "elegiveis"] < cfg.MIN_EXERCICIOS).all())  # três testes
+    print(f"  [{'ok' if ok else 'FALHA'}] {'Apêndice A: listas de empresas':42s} {len(dentro)} no painel e {len(fora)} fora, como no TCC")  # linha do relatório
+    if not ok:                                                # falhou
+        R.falhas.append("Apêndice A: listas de empresas")     # registra
+        print("    só no código:", sorted((dentro - tcc_dentro) | (fora - tcc_fora)),  # diferenças
+              "| só no TCC:", sorted((tcc_dentro - dentro) | (tcc_fora - fora)))  # (continuação)
 
 
 def executar(saida=cfg.RESULTADOS) -> bool:                   # as três conferências

@@ -26,7 +26,7 @@ As saídas vão para `resultados/r/`. O andamento aparece no console e fica em `
 | `painel.R` | eq. (2), defasagem, filtros, winsorização, funil | `decisoes_amostra`, `montar_painel`, `winsorizar`, `funil_amostra` |
 | `estimacao.R` | eq. (7), CR1, WCR, Driscoll–Kraay, Holm, R², VIF, FWL | `estimar`, `wild_cluster_restrito`, `driscoll_kraay`, `holm`, `vif_intra`, `fracao_fwl` |
 | `especificacoes.R` | Tabelas 7 e 8; Apêndice C | `painel_completo`, `painel_contemporaneo`, `catalogo_modelos`, `estimar_todos` |
-| `tabelas.R` | Tabelas 1, 4–8, Apêndice C, Figura 1; eq. (8) | `gerar_tabelas`, `desenhar_painel_figura1` |
+| `tabelas.R` | Tabelas 1–8, Apêndices A, B e C, Figura 1; eq. (8) | `gerar_tabelas`, `tabelas_descritivas`, `elegibilidade`, `desenhar_painel_figura1` |
 | `valores.R` | números citados no TCC | `valor`, `formatar` |
 | `conferencia.R` | Apêndice B (reprodução) | `conferir` |
 | `relatorio.R` | relatório em PDF | `gerar_relatorio` |
