@@ -1,0 +1,14 @@
+modelo,ticker,ano_mercado,ano_fundamento
+sem_CEB_2021_2022,CEBR3,2021,2020
+sem_CEB_2021_2022,CEBR3,2022,2021
+sem_CEB_2022,CEBR3,2022,2021
+sem_CEB_2020_2022,CEBR3,2020,2019
+sem_CEB_2020_2022,CEBR3,2021,2020
+sem_CEB_2020_2022,CEBR3,2022,2021
+sem_transicoes,AURE3,2022,2021
+sem_transicoes,AURE3,2023,2022
+sem_transicoes,AURE3,2024,2023
+sem_transicoes,AURE3,2025,2024
+sem_transicoes,CEBR3,2021,2020
+sem_transicoes,CEBR3,2022,2021
+sem_transicoes,LIGT3,2024,2023

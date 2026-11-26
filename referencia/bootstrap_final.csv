@@ -1,0 +1,16 @@
+modelo,variavel,p_bootstrap,replicacoes,clusters
+principal,roe_lag,0.0025634765625,16384,14
+principal,dl_lag,0.02587890625,16384,14
+principal,size_lag,0.006103515625,16384,14
+sem_winsor,roe_lag,0.0447998046875,16384,14
+sem_winsor,dl_lag,0.036865234375,16384,14
+sem_winsor,size_lag,0.0062255859375,16384,14
+sem_CEBR,roe_lag,0.0830078125,8192,13
+sem_CEBR,dl_lag,0.059814453125,8192,13
+sem_CEBR,size_lag,0.121337890625,8192,13
+sem_EKTR_TAEE,roe_lag,0.01416015625,4096,12
+sem_EKTR_TAEE,dl_lag,0.05078125,4096,12
+sem_EKTR_TAEE,size_lag,0.0078125,4096,12
+historico,roe_lag,0.02294921875,32768,15
+historico,dl_lag,0.016357421875,32768,15
+historico,size_lag,0.01123046875,32768,15

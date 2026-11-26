@@ -1,0 +1,184 @@
+% ============================================================================
+% roteiro.txt — conteúdo do relatório em PDF, compartilhado por Python e R
+% ============================================================================
+% Linhas iniciadas por % são comentários.
+% Sintaxe:
+%   ## Título            seção (começa em página nova)
+%   ### Título           subseção
+%   texto                parágrafo (linhas seguidas são unidas; linha em branco separa)
+%   - item               lista com marcadores
+%   > texto              quadro de destaque
+%   | a | b |            tabela fixa (primeira linha = cabeçalho; a linha | --- | é ignorada)
+%   @formula texto       fórmula centralizada
+%   @tabela arquivo.csv | título | nota | cabeçalhos separados por ;
+%   @capa @funil @decisoes_capital @correcoes_lucro @lacunas @figura1
+%   @conferencia_resumo @conferencia_detalhe @pagina
+%   @nomes chave=rótulo;...   rótulos das variáveis nas tabelas
+%   {chave;decimais;tipo}     número calculado na hora (mesma regra da conferência)
+% ============================================================================
+@nomes roe_lag=ROE;dl_lag=Alavancagem;size_lag=Porte;lnpl_lag=ln(PL);roa_lag=ROA líquido;roa_oper_lag=ROA operacional;ll_bi_lag=Lucro (R$ bi);pl_bi_lag=PL (R$ bi);dl_ampla_lag=Alav. ampliada;roe_atual=ROE (mesmo ano);dl_atual=Alav. (mesmo ano);size_atual=Porte (mesmo ano);roe_media3=ROE médio 3 anos;roe_plmedio=ROE com PL médio
+@capa
+
+## 1. Como ler este relatório
+
+Este relatório foi gerado automaticamente pelos scripts de reprodução do TCC "Fundamentos contábeis e capitalização de mercado de empresas elétricas brasileiras" (Fontes e Souza Junior, 2026). Cada número aqui impresso foi calculado agora, a partir dos extratos públicos preservados da CVM e da B3, e não copiado do texto do trabalho.
+
+O relatório segue a ordem do TCC: dados e amostra, construção das variáveis, modelo e inferência, verificações de robustez. Cada tabela traz o mesmo número da tabela correspondente do trabalho. No fim, a seção de conferência compara cada valor calculado com o valor publicado.
+
+> Pergunta do TCC: as associações entre fundamentos contábeis do exercício anterior e capitalização permaneceram estáveis diante de mudanças nos indicadores e nas empresas analisadas? Hipóteses: H1, associação positiva entre ROE e capitalização; H2, negativa entre alavancagem líquida e capitalização; H3, positiva entre porte e capitalização. Os resultados medem associação, sem afirmar relação de causa.
+
+| Etapa | O que o script faz | Onde aparece |
+| --- | --- | --- |
+| 1. Construir a base | Concilia quantidade de ações, tesouraria e preço; calcula as contas e os fundamentos; monta os painéis | Seções 2 e 3 |
+| 2. Estimar | Modelo principal, inferência CR1 e WCR, Holm, Driscoll–Kraay e todas as sensibilidades | Seções 4 e 5 |
+| 3. Tabelas | Tabelas 1, 4 a 8, Apêndice C e Figura 1 | Seções 2 a 5 |
+| 4. Conferir | Compara com as saídas originais, com pacotes estatísticos e com o texto do TCC | Seção 6 e anexo |
+
+## 2. Dados e amostra
+
+### 2.1 Fontes
+
+- CVM, Demonstrações Financeiras Padronizadas (DFP): balanço, DRE, DVA e composição do capital (ações emitidas e em tesouraria). Usa-se a última versão de cada documento e só o exercício corrente.
+- CVM, Formulário de Referência (FRE): capital social por classe, subclasses de preferenciais e movimentação da tesouraria. Serve para conferir as quantidades da DFP.
+- B3, cotações históricas (COTAHIST): último negócio de dezembro de cada classe de ação, em preço nominal (sem ajuste retroativo por proventos ou desdobramentos).
+- Documentos originais das empresas, usados quando a base da CVM não permitia conciliar: Cemig 2020, CPFL em sete exercícios e EDP 2010–2011.
+
+### 2.2 Capitalização de mercado
+
+A capitalização é a soma, em cada classe de ação, do preço de dezembro vezes a quantidade em circulação (emitidas menos tesouraria). Exige-se que preço e quantidade sejam da mesma classe. Uma classe sem cotação não é substituída pela cotação de outra: a observação sai.
+
+@formula VM(i,t) = Σ por classe  P(c) × [ Q(c) − T(c) ]
+
+Antes do cálculo, o script confere a quantidade de ações da DFP com o capital informado no FRE. Isso resolve quatro problemas que alteram o valor sem nenhum aviso:
+
+- Escala: algumas empresas informam a quantidade em milhares. O script testa a quantidade em unidades e multiplicada por mil e fica com a escala que coincide com o FRE.
+- Tesouraria já descontada: quando o FRE só coincide com "emitidas + tesouraria", o DFP já trazia o valor líquido. A quantidade emitida é recuperada para não descontar a tesouraria duas vezes.
+- Desdobramento ou grupamento aprovado depois de dezembro, mas já refletido na DFP: o evento é desfeito para casar a quantidade com o preço de dezembro.
+- Tesouraria divergente entre DFP e FRE, ou subclasses de preferenciais (PNA, PNB) sem repartição documentada: a observação sai.
+
+A tabela a seguir lista as empresas-ano em que alguma dessas regras, ou um documento original, alterou a quantidade usada.
+
+@decisoes_capital
+
+### 2.3 Lucro da controladora
+
+O lucro total deve ser igual à soma do lucro da controladora com o dos não controladores. Quando a diferença passa de R$ 1 mil, o script consulta a DRE individual. Se ela for igual ao lucro consolidado total e não houver não controladores, esse valor é usado como lucro da controladora; caso contrário, o lucro fica ausente.
+
+@correcoes_lucro
+
+### 2.4 Funil da amostra
+
+O painel principal cobre os anos de mercado de 2020 a 2025. Cada empresa-ano precisa de capitalização conciliada, dos três fundamentos do ano anterior e de pelo menos quatro exercícios da mesma empresa. Nenhum valor ausente é preenchido.
+
+@funil
+
+@tabela tabela_1_cobertura.csv | Tabela 1. Cobertura anual dos painéis | Contagem de empresas por ano. 2010 e 2011 ficaram de fora porque só uma empresa era elegível. | Ano;Principal;Histórico
+
+### 2.5 Por que algumas empresas têm menos de seis anos
+
+O painel não é balanceado: das 14 empresas, nove têm os seis anos. A tabela mostra cada ano ausente e o motivo registrado pelo script.
+
+@lacunas
+
+## 3. Variáveis
+
+| Medida | Definição | Contas da CVM | Unidade |
+| --- | --- | --- | --- |
+| Valor de mercado | Logaritmo natural da capitalização | — | ln de reais |
+| ROE | Lucro da controladora / PL da controladora (exige PL positivo) | 3.11.01 / (2.03 − 2.03.09) | Decimal |
+| EBITDA aproximado | Resultado antes do financeiro e tributos + depreciação e amortização da DVA | 3.05 + 7.04.01 | Reais |
+| Alavancagem | (Empréstimos CP + LP − caixa) / EBITDA (exige EBITDA positivo) | (2.01.04 + 2.02.01 − 1.01.01) | Vezes |
+| Porte | Logaritmo natural do ativo total | 1 | ln de reais |
+
+Os três fundamentos são do exercício anterior (t−1) ao da capitalização de dezembro (t): o mercado só conhece as demonstrações de um ano no começo do ano seguinte. No consolidado, PL e lucro são os da controladora; a Elektro entra pelo individual em quatro observações.
+
+O logaritmo transforma diferenças de escala em diferenças proporcionais: dobrar o valor soma sempre a mesma quantidade, seja a empresa grande ou pequena. ROE e alavancagem são winsorizados nos percentis 1 e 99 de cada painel: valores além desses limites são trazidos até eles, sem apagar a observação.
+
+@tabela tabela_4_descritivas.csv | Tabela 4. Estatísticas descritivas do painel principal | N = 76. ROE em porcentagem nesta tabela e em decimal na regressão; ROE e alavancagem após winsorização. | Variável;Média;Desvio-padrão;Mínimo;Mediana;Máximo
+
+## 4. Modelo e inferência
+
+### 4.1 O modelo
+
+@formula ln(VM it) = a(i) + l(t) + b1·ROE(i,t−1) + b2·ALAV(i,t−1) + b3·PORTE(i,t−1) + e(it)
+
+O termo a(i) é o efeito fixo de cada empresa: absorve tudo o que é permanente nela (segmento, região, controlador, porte típico). O termo l(t) é o efeito fixo de cada ano: absorve choques comuns a todas (juros, crises, regulação). Com os dois, cada coeficiente mede a associação entre mudanças do fundamento dentro da mesma empresa e mudanças do seu valor, descontado o movimento geral do ano.
+
+O modelo é estimado por mínimos quadrados com variáveis indicadoras. São N = {mod|N|principal;0;int} observações e K = {mod|K|principal;0;int} parâmetros: uma constante, 13 indicadoras de empresa, 5 de ano e 3 fundamentos. Restam {mod|gl_residuo|principal;0;int} graus de liberdade.
+
+### 4.2 Inferência: quanto confiar nos coeficientes
+
+- CR1 (erro-padrão agrupado por empresa): os anos de uma mesma empresa não são independentes. O CR1 soma as contribuições dentro de cada empresa antes de medir a incerteza, com fator de correção G/(G−1) × (N−1)/(N−K) e distribuição t com G − 1 = 13 graus de liberdade.
+- WCR (wild cluster bootstrap restrito): com só 14 grupos, o CR1 pode exagerar a precisão. O WCR impõe a hipótese de coeficiente nulo e troca o sinal dos resíduos de cada empresa inteira em todas as 2^14 = 16.384 combinações possíveis. O valor de p é a proporção de combinações com estatística tão ou mais extrema que a observada. Foi o teste prioritário do trabalho.
+- Holm: ajusta os três valores de p WCR do modelo principal para o fato de três hipóteses serem testadas juntas (multiplicadores 3, 2 e 1, com ajuste monotônico).
+- Driscoll–Kraay: comparação suplementar que admite dependência entre empresas no mesmo ano; com seis anos, tem alcance limitado.
+
+@tabela tabela_5_coeficientes.csv | Tabela 5. Coeficientes e inferência agrupada por empresa | Efeitos fixos de empresa e ano. N = 76; G = 14; K = 22. CR1 com t(13). | Fundamento;Coeficiente;Erro-padrão;p CR1;IC 95% inf.;IC 95% sup.
+
+@tabela tabela_6_cr1_wcr_holm.csv | Tabela 6. Valores de p CR1 e WCR do modelo principal, com Holm | WCR: 16.384 combinações. Excedências = combinações com estatística tão ou mais extrema que a observada. | Fundamento;p CR1;p WCR;p Holm;Excedências;Combinações
+
+No ROE, {excedencias|principal|roe_lag;0;int} das 16.384 combinações produziram estatística tão extrema quanto a observada: p WCR = {p_WCR|principal|roe_lag;4;p}. Com Holm, os valores ajustados foram {holm|roe_lag;4;num} (ROE), {holm|dl_lag;4;num} (alavancagem) e {holm|size_lag;4;num} (porte), todos abaixo de 5%.
+
+### 4.3 Tamanho dos efeitos
+
+Como o valor de mercado está em logaritmo, cada coeficiente se traduz em variação percentual:
+
+@tabela interpretacao_efeitos.csv | Interpretação dos coeficientes | Mantidos os demais fundamentos e os efeitos fixos. Associação, não causa. | Variação do fundamento;Cálculo;Variação do valor (%)
+
+- ROE: dez pontos percentuais a mais associam-se a cerca de {efeito|roe_lag;2;abs}% menos capitalização. A hipótese H1 (associação positiva) foi contrariada no modelo principal.
+- Alavancagem: uma vez a mais de dívida líquida sobre EBITDA associa-se a cerca de {efeito|dl_lag;2;abs}% menos capitalização, como esperado em H2.
+- Porte: 10% a mais de ativo associam-se a cerca de {efeito|size_lag;2;abs}% mais capitalização, como esperado em H3.
+
+### 4.4 Ajuste e redundância
+
+O R² global foi {mod|R2_global|principal;4;num}, mas inclui as diferenças permanentes entre empresas e os movimentos anuais. O R² intra-grupo, que mede o que é explicado dentro de cada empresa, foi {mod|R2_intra|principal;4;num}; o parcial de duas vias, que compara o modelo completo com o de só efeitos fixos, foi {mod|R2_parcial|principal;4;num}. Os VIFs intra-grupo ({vif|roe_lag;2;num}, {vif|dl_lag;2;num} e {vif|size_lag;2;num}) não indicam redundância forte entre os fundamentos.
+
+## 5. Robustez
+
+### 5.1 Matriz de sensibilidade
+
+Cada linha reestima o modelo com uma mudança de amostra ou de medida. O asterisco marca p WCR abaixo de 0,05 antes do arredondamento. Os testes foram definidos por perguntas econômicas, não escolhidos pelo valor de p, e não recebem ajuste conjunto.
+
+@tabela tabela_7_sensibilidade.csv | Tabela 7. Matriz de sensibilidade: valores de p WCR | N/G/K: observações, grupos e parâmetros. R² intra: intra-grupo. * p < 0,05. Rentab.: ROE, exceto nas linhas de ROA. | Modelo;N/G/K;R² intra;Rentab.;Alav.;Porte
+
+Nas 18 linhas, a rentabilidade foi significativa em {contagem|rentabilidade;0;int}, a alavancagem em {contagem|alavancagem;0;int} e o porte em {contagem|porte;0;int}. O porte foi o resultado mais estável; o ROE, o mais sensível.
+
+### 5.2 Especificações alternativas na mesma amostra
+
+@tabela tabela_8_especificacoes.csv | Tabela 8. Especificações alternativas na mesma amostra | Dependente: ln(capitalização), exceto Lucro e PL, em R$ bilhões. | Modelo;Variável;Coef.;p CR1;p WCR;N/G/K;R² intra
+
+Com ln(PL) no modelo, o ROE continuou negativo, mas perdeu significância pelo WCR (p = {p_WCR|controle_PL|roe_lag;4;p}). Os dois ROAs também não foram significativos. A dívida ampliada, que desconta também as aplicações financeiras, baixou a alavancagem média bruta de {media_bruta|dl_lag_bruto;4;num} para {media_bruta|dl_ampla_lag_bruto;4;num} vezes e manteve a associação negativa.
+
+### 5.3 Retirada de cada empresa e o caso CEB
+
+@figura1
+
+@tabela apC_tabela_1_retiradas.csv | Apêndice C, Tabela 1. Retirada individual das 14 empresas | Coeficientes com erros-padrão CR1 entre parênteses. | Retirada;N/G/K;R² intra;ROE;Alavancagem;Porte
+
+Sem a CEB, o coeficiente do ROE quase não muda, mas a incerteza aumenta e o p WCR sobe para {p_WCR|excluir_CEBR3|roe_lag;4;p}. A explicação está na concentração da informação: depois de retirar os efeitos fixos e os outros fundamentos, a CEB responde por {fwl|CEBR3;2;num}% da variação que identifica o coeficiente do ROE, e só a CEB de 2022 por {fwl_obs|CEBR3|2022;2;num}%. Essa medida descreve de onde vem a informação; não é uma contribuição causal.
+
+@tabela apC_tabela_2_balanceado_janelas.csv | Apêndice C, Tabela 2. Painel balanceado e janelas de transição | DK1: Driscoll–Kraay com uma defasagem. | Modelo;Variável;Coef.;p CR1;p WCR;p DK1;N/G/K;R² intra
+
+@tabela apC_tabela_3_alinhamento_agrupamento.csv | Apêndice C, Tabela 3. Alinhamento temporal, rentabilidade e agrupamento | Grupos societários: 14 empresas e 12 grupos (Elektro com Neoenergia; Taesa com Cemig). Modelos "defasado: mesmas N" repetem o principal nas mesmas linhas. | Modelo;Variável;Coef.;p CR1;p WCR;N/G/K;R² intra
+
+@tabela apC_tabela_4_driscoll_kraay.csv | Apêndice C, Tabela 4. Comparação suplementar Driscoll–Kraay | Bartlett com uma e duas defasagens; fator N/(N−K) e t(N−K). | Fundamento;p DK1;p DK2
+
+## 6. Conferência com o TCC
+
+Os valores das tabelas e do texto do TCC foram transcritos para o arquivo dados/documentos/valores_publicados_tcc.csv. Cada um é recalculado aqui, arredondado com as mesmas casas decimais e comparado com o publicado. O anexo lista os itens um a um.
+
+@conferencia_resumo
+
+Além desta comparação com o texto, o script de conferência (etapa 4) compara as saídas com as do pacote original do trabalho, com tolerância de 10^-8, e com pacotes estatísticos independentes: statsmodels e linearmodels, na versão em Python, e fixest, na versão em R.
+
+### Limites da reprodução
+
+- A reprodução parte dos extratos preservados na coleta. A seleção do último negócio de dezembro nos arquivos brutos da B3 e a extração das contas da DFP foram feitas na coleta; os arquivos brutos com hash preservado estão identificados por códigos de verificação (SHA-256) em dados/fontes.json, dados/cvm_complementar/catalogo_*.json e dados/b3/manifesto_precos.json.
+- A base usa a última versão de cada demonstração e, por isso, incorpora reapresentações posteriores: não é exatamente a informação disponível ao investidor em cada data.
+- A listagem de 23 emissoras é documental e não é um censo das elétricas da B3. O pacote mostra que os números decorrem dos dados e das regras declaradas, mas não comprova que a listagem foi fixada antes da análise.
+- Os diagnósticos de concentração e as retiradas descrevem a sensibilidade dos resultados; não identificam efeito causal.
+
+@pagina
+## Anexo. Conferência item a item
+
+@conferencia_detalhe

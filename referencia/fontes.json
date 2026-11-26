@@ -1,0 +1,97 @@
+[
+  {
+    "arquivo": "dfp_2010.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2010.zip",
+    "sha256": "c6a9c95c2510e8a71bb583084492e9c52c3f423a3be56f1c5d2dd4f6960677ff"
+  },
+  {
+    "arquivo": "dfp_2011.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2011.zip",
+    "sha256": "858423fba40124d7a30abea4e70248f7251e1d2c792e9fcece5a57afd3115f34"
+  },
+  {
+    "arquivo": "dfp_2012.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2012.zip",
+    "sha256": "3aff7a726d324d29924887eed45bbc58bc30b66cd9079bafe701d55efdfe0849"
+  },
+  {
+    "arquivo": "dfp_2013.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2013.zip",
+    "sha256": "ef379ac9aab9567434ca6d36053d8bd1f0a2a47a0c65a2e1d218259da530e224"
+  },
+  {
+    "arquivo": "dfp_2014.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2014.zip",
+    "sha256": "b8795dba134754475a485c0f88b6542face6613bb418d261caa011d90e032f28"
+  },
+  {
+    "arquivo": "dfp_2015.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2015.zip",
+    "sha256": "39a7001be9eaa91a6acc83831c816794df4f92441d7702b80da6c4b234352b4e"
+  },
+  {
+    "arquivo": "dfp_2016.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2016.zip",
+    "sha256": "772f06a73c5fe80534b61365ea5d03f9d8fcce21b87823bd5c9d48699bcf71d5"
+  },
+  {
+    "arquivo": "dfp_2017.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2017.zip",
+    "sha256": "1ff8185d61759e49b406c55c5d0b593587c2e76e9032c95f836f7fea02fc9d58"
+  },
+  {
+    "arquivo": "dfp_2018.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/DFP/DADOS/dfp_cia_aberta_2018.zip",
+    "sha256": "280dcf5acd7bdb529acc186c9a1195092a1e06cf1e33ddcdca0b11c31261296f"
+  },
+  {
+    "arquivo": "fre_2010.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2010.zip",
+    "sha256": "a83d0dd42ed2fc57d83245ef75561585179eaff68351454a9c804dac2611970b"
+  },
+  {
+    "arquivo": "fre_2011.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2011.zip",
+    "sha256": "7ef45a3f8fa9d62f396cc11a692566e9d16137cc6d0ffccaaff8d8d507b4cad8"
+  },
+  {
+    "arquivo": "fre_2012.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2012.zip",
+    "sha256": "cd48dd32bab6d410dc523a3de0d27ca3bb7ebd8c403e6fa1de647b1454fbd069"
+  },
+  {
+    "arquivo": "fre_2013.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2013.zip",
+    "sha256": "2c746f2cf0636236972a06be1d4e15dabaac15281e88753505acae9385a76f79"
+  },
+  {
+    "arquivo": "fre_2014.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2014.zip",
+    "sha256": "8797e5b66f4c126d9266746ab704bdb0d787ed5d92dca917ceffa2749b150a50"
+  },
+  {
+    "arquivo": "fre_2015.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2015.zip",
+    "sha256": "21be79d408fcc08e9edafcee941f02a339c5664e96b3ad83afd84f27ed838d60"
+  },
+  {
+    "arquivo": "fre_2016.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2016.zip",
+    "sha256": "bfd0513d903cb3e5a43360dcb1673b3c9ac1f23396974726cca764df64d481cc"
+  },
+  {
+    "arquivo": "fre_2017.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2017.zip",
+    "sha256": "cb90963d1e7d6b2416265eb7aa0a463b98d067ade096f47b724467184273b0ab"
+  },
+  {
+    "arquivo": "fre_2018.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2018.zip",
+    "sha256": "7a349acbce124fdb0846c371b3e68e5ff06781ead4b8713d6080eabf6737d082"
+  },
+  {
+    "arquivo": "fre_2019.zip",
+    "url": "https://dados.cvm.gov.br/dados/CIA_ABERTA/DOC/FRE/DADOS/fre_cia_aberta_2019.zip",
+    "sha256": "30f461d5d3b3cdbab84faac20c158c6a41cea1ee0223c40d988db9845e2c6a51"
+  }
+]

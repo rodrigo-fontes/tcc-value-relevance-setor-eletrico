@@ -1,0 +1,130 @@
+[
+  {
+    "ano": 2010,
+    "arquivo": "COTAHIST_A2010(1).ZIP",
+    "sha256": "65637311ced65ba54a617ab9cc2543974fdd4ed0ce416a5235e01b2f1aae66f5",
+    "linhas": 287482,
+    "duplicatas": 0,
+    "tickers_dezembro": 516
+  },
+  {
+    "ano": 2011,
+    "arquivo": "COTAHIST_A2011(2).ZIP",
+    "sha256": "0cf67787cc1b77dde67a4ff1a340123ab261ce252245d24b5d32ec5b8b162359",
+    "linhas": 298372,
+    "duplicatas": 0,
+    "tickers_dezembro": 521
+  },
+  {
+    "ano": 2012,
+    "arquivo": "COTAHIST_A2012(2).ZIP",
+    "sha256": "98771b1248a3f19b547609ed4fd6c8da0eb396140afb6de91946db457c855465",
+    "linhas": 330635,
+    "duplicatas": 0,
+    "tickers_dezembro": 523
+  },
+  {
+    "ano": 2013,
+    "arquivo": "COTAHIST_A2013(2).ZIP",
+    "sha256": "b6dfb0d73181a60cc65083c2b185a1cbb0c95b87b21f873cc151515c65e47636",
+    "linhas": 378919,
+    "duplicatas": 0,
+    "tickers_dezembro": 566
+  },
+  {
+    "ano": 2014,
+    "arquivo": "COTAHIST_A2014(2).ZIP",
+    "sha256": "613d76f8a64c7ffba0406cb54c1fd187266f55ed8b6037cb85993b2071a5aae7",
+    "linhas": 392230,
+    "duplicatas": 0,
+    "tickers_dezembro": 562
+  },
+  {
+    "ano": 2015,
+    "arquivo": "COTAHIST_A2015.ZIP",
+    "sha256": "593f8740ec1aa87c80c54c623f1759530b6b32cdadd34a64f0fc66a529f34e35",
+    "linhas": 414179,
+    "duplicatas": 0,
+    "tickers_dezembro": 570
+  },
+  {
+    "ano": 2016,
+    "arquivo": "COTAHIST_A2016(2).ZIP",
+    "sha256": "ffc82a9b973cb5901e68dc11bea1bbc9bf0a2c46749e0efe5a7a89229bc0d81f",
+    "linhas": 466736,
+    "duplicatas": 0,
+    "tickers_dezembro": 591
+  },
+  {
+    "ano": 2017,
+    "arquivo": "COTAHIST_A2017(1).ZIP",
+    "sha256": "af6aaa85187c1d58ec6565522644066da573a7dc5b579c1d4c906ae95a2dea86",
+    "linhas": 489117,
+    "duplicatas": 0,
+    "tickers_dezembro": 654
+  },
+  {
+    "ano": 2018,
+    "arquivo": "COTAHIST_A2018(2).ZIP",
+    "sha256": "9d66136179d9822476c6035000167aecf2665f4396619e4d74c0011745a0c507",
+    "linhas": 580157,
+    "duplicatas": 0,
+    "tickers_dezembro": 678
+  },
+  {
+    "ano": 2019,
+    "arquivo": "COTAHIST_A2019(3).ZIP",
+    "sha256": "5170d3f8f079c3306424b36c2fae9b467391f8fa37d16d389f487b4c5c28edb9",
+    "linhas": 779231,
+    "duplicatas": 0,
+    "tickers_dezembro": 854
+  },
+  {
+    "ano": 2020,
+    "arquivo": "COTAHIST_A2020(1).ZIP",
+    "sha256": "86442168939b9da7b3cc1ec1662c333ee5ab4c75f2be1865b5bf55ba4c52168f",
+    "linhas": 1251648,
+    "duplicatas": 0,
+    "tickers_dezembro": 975
+  },
+  {
+    "ano": 2021,
+    "arquivo": "COTAHIST_A2021(1).ZIP",
+    "sha256": "b0d4aed17d609c7ba615a23320c2fd513b580a251ae7d884a5015ef8a3fe4705",
+    "linhas": 1831864,
+    "duplicatas": 1,
+    "tickers_dezembro": 1149
+  },
+  {
+    "ano": 2022,
+    "arquivo": "COTAHIST_A2022(1).ZIP",
+    "sha256": "a4f9015b755f797d9c08b0d13f19dbfab18a6c75f379c0271a1cf1b5f6323cd8",
+    "linhas": 2117442,
+    "duplicatas": 0,
+    "tickers_dezembro": 1222
+  },
+  {
+    "ano": 2023,
+    "arquivo": "COTAHIST_A2023(1).ZIP",
+    "sha256": "ad1603788d78aaa1de806498572277f1d9443f88ae116452751b5800cb23523e",
+    "linhas": 2257426,
+    "duplicatas": 0,
+    "tickers_dezembro": 1284
+  },
+  {
+    "ano": 2024,
+    "arquivo": "COTAHIST_A2024(1).ZIP",
+    "sha256": "96a003d10fab0fa2ace0c64cdc2b892b4c111adf9da8e538aa0b28437bd2a172",
+    "linhas": 2635563,
+    "duplicatas": 0,
+    "tickers_dezembro": 1337
+  },
+  {
+    "ano": 2025,
+    "arquivo": "COTAHIST_A2025(1).ZIP",
+    "sha256": "6cc0ad851c8f605ca30418acac48be81f1767f6ed05b4f563772d06ae448047d",
+    "linhas": 3174700,
+    "duplicatas": 0,
+    "tickers_dezembro": 1440
+  }
+]

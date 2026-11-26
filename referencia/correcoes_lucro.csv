@@ -1,0 +1,7 @@
+ticker,ano,anterior,corrigido,status
+LIGT3,2021,0.0,397945000.0,confirmado_DRE_individual_igual_consolidado
+LIGT3,2022,0.0,-5672203000.0,confirmado_DRE_individual_igual_consolidado
+LIGT3,2023,0.0,255162000.0,confirmado_DRE_individual_igual_consolidado
+LIGT3,2024,0.0,1643779000.0,confirmado_DRE_individual_igual_consolidado
+LIGT3,2025,0.0,,excluido_lucro_inconsistente
+SRNA3,2021,0.0,598231000.0,confirmado_DRE_individual_igual_consolidado
