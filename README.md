@@ -77,7 +77,7 @@ As duas versões são independentes, comentadas linha a linha e citam no código
 Clone o repositório e rode, a partir da raiz:
 
 ```bash
-git clone https://github.com/<usuario>/tcc-value-relevance-setor-eletrico.git
+git clone https://github.com/rodrigo-fontes/tcc-value-relevance-setor-eletrico.git
 cd tcc-value-relevance-setor-eletrico
 
 # Python (≥ 3.12)
