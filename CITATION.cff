@@ -8,6 +8,7 @@ authors:
   - family-names: Souza Junior
     given-names: Marco Antonio Alves de
     affiliation: "Escola Superior de Agricultura Luiz de Queiroz, Universidade de São Paulo"
+repository-code: "https://github.com/rodrigo-fontes/tcc-value-relevance-setor-eletrico"
 version: 1.0.0
 date-released: "2026-11-26"
 license: MIT
