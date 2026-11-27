@@ -161,6 +161,12 @@ As três associações são significativas pelos dois testes, mesmo com o ajuste
 
 **O caso da CEB.** Uma só empresa concentra **54,55%** da variação que identifica o coeficiente do ROE, e só a observação de 2022 responde por **31,38%**. Em 2021, a CEB vendeu sua distribuidora: o lucro saltou e o ROE bruto foi de 63,74% para 150,84%. Sem a CEB, o coeficiente quase não muda (de −0,6354 para −0,6241), mas o erro-padrão sobe de 0,1044 para 0,3638, e o teste perde significância. A CEB afeta sobretudo a **precisão**. O TCC não a apresenta como explicação do sinal negativo.
 
+A Figura 1 do TCC mostra isso de uma vez. Pontos: coeficiente estimado após retirar a empresa indicada; barras: intervalo CR1 de 95%; linha tracejada: modelo principal; losango: retirada da CEB. Retirar a CEB quase não move o ponto do ROE, mas alarga muito o intervalo, que passa a cruzar o zero. Retirar a Light desloca alavancagem e porte.
+
+<p align="center"><img src="figura_1.png" alt="Figura 1 do TCC: coeficientes de ROE, alavancagem e porte após a retirada de cada uma das 14 empresas, com intervalos de 95%" width="720"></p>
+
+<p align="center"><em>Figura 1. Coeficientes após a retirada de cada empresa (TCC). Gerada por <code>tabelas.py</code> / <code>tabelas.R</code>.</em></p>
+
 **Alavancagem (H2).** O sinal negativo é persistente:
 
 - resiste à dívida ampliada, que desconta também as aplicações financeiras (p = 0,0262);

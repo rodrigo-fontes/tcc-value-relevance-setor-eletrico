@@ -80,6 +80,10 @@ $$y_{it} = \alpha_i + \lambda_t + \beta_1\,\mathrm{ROE}_{i,t-1} + \beta_2\,\math
 
 N = 76; G = 14; K = 22; R² intra-grupo = 0,2130; R² parcial de duas vias = 0,2896.
 
+**Figura 1 do TCC — Coeficientes após a retirada de cada empresa.** Pontos: coeficiente estimado após retirar a empresa indicada; barras: intervalo CR1 de 95%; linha tracejada: modelo principal; losango: retirada da CEB. Retirar a CEB quase não muda o coeficiente do ROE, mas alarga muito o intervalo; retirar a Light desloca alavancagem e porte.
+
+<p align="center"><img src="docs/figura_1.png" alt="Figura 1 do TCC: coeficientes de ROE, alavancagem e porte após a retirada de cada uma das 14 empresas, com intervalos de 95%" width="720"></p>
+
 **Leitura.** No modelo principal, H1 foi contrariada (ROE maior associado a menor capitalização), e H2 e H3 receberam apoio. Nas 18 verificações da matriz de sensibilidade (Tabela 7), o ROE foi significativo pelo WCR em 12, a alavancagem em 13 e o porte em 15. A rentabilidade perdeu significância com ln(PL), com o ROA e sem a CEB, que concentra 54,55% da variação que identifica o coeficiente do ROE. Os resultados medem associação, não causalidade.
 
 > Detalhes de cada etapa, com as equações e as referências: [docs/metodologia.md](docs/metodologia.md). Por que cada escolha foi feita, com a alternativa e onde ela foi testada: [docs/decisoes_de_projeto.md](docs/decisoes_de_projeto.md). Relatório completo gerado pelos scripts: [docs/relatorio_reproducao.pdf](docs/relatorio_reproducao.pdf).
