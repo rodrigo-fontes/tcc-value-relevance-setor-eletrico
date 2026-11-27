@@ -11,6 +11,17 @@ Pacote de reprodução do Trabalho de Conclusão de Curso de **Rodrigo Pereira F
 
 O repositório refaz, em **Python** e em **R**, todo o caminho entre os dados públicos da CVM e da B3 e cada número e cada tabela do TCC: 498 valores de tabelas e de texto, todos conferidos automaticamente.
 
+### Documentação
+
+| Documento | Para que serve |
+|---|---|
+| [Decisões de projeto](docs/decisoes_de_projeto.md) | **Por que** cada escolha foi feita: o que se decidiu, a justificativa, a alternativa e onde ela foi testada (35 decisões de metodologia, dados e engenharia) |
+| [Metodologia](docs/metodologia.md) | Equações, regras e correspondência entre o TCC e o código |
+| [Casos de conciliação](docs/decisoes.md) | Cada empresa-ano em que uma regra ou um documento original mudou o dado |
+| [Conferência](docs/conferencia.md) | Como os 498 valores e as listas do TCC são conferidos |
+| [Referências](docs/referencias.md) | Referencial teórico e fontes de dados |
+| [Relatório de reprodução (PDF)](docs/relatorio_reproducao.pdf) | Todas as tabelas do TCC, geradas pelo código e explicadas |
+
 ---
 
 ## Sumário
