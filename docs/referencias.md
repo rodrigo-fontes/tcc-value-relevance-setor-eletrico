@@ -1,6 +1,6 @@
 # Referências
 
-Formato e conteúdo iguais aos do TCC. A coluna "Onde" indica o módulo ou a etapa em que cada referência fundamenta uma decisão do código. As referências marcadas com **(complementar)** não constam do TCC: são os trabalhos originais de técnicas usadas na implementação, citados nos comentários do código.
+Formato e conteúdo iguais aos do TCC. A coluna "Onde" indica o módulo ou a etapa em que cada referência fundamenta uma decisão do código. As referências marcadas com **(complementar)** não constam do TCC: são os trabalhos originais de técnicas usadas na implementação, citados nos comentários do código, e as referências sobre reprodutibilidade que motivam o pacote.
 
 ## Relevância informacional e avaliação
 
@@ -32,6 +32,13 @@ Formato e conteúdo iguais aos do TCC. A coluna "Onde" indica o módulo ou a eta
 | Frisch, R.; Waugh, F.V. 1933. Partial time regressions as compared with individual trends. Econometrica 1(4): 387–401. DOI: 10.2307/1907330. **(complementar)** | concentração da variação (`estimacao`) |
 | Lovell, M.C. 1963. Seasonal adjustment of economic time series and multiple regression analysis. Journal of the American Statistical Association 58(304): 993–1010. DOI: 10.1080/01621459.1963.10480682. **(complementar)** | concentração da variação (`estimacao`) |
 | Hyndman, R.J.; Fan, Y. 1996. Sample quantiles in statistical packages. The American Statistician 50(4): 361–365. DOI: 10.1080/00031305.1996.10473566. **(complementar)** | quantil usado na winsorização (`painel`) |
+
+## Reprodutibilidade
+
+| Referência | Onde |
+|---|---|
+| Christensen, G.; Miguel, E. 2018. Transparency, reproducibility, and the credibility of economics research. Journal of Economic Literature 56(3): 920–980. DOI: 10.1257/jel.20171350. **(complementar)** | motivação do pacote ([guia_do_projeto.md](guia_do_projeto.md)) |
+| Peng, R.D. 2011. Reproducible research in computational science. Science 334(6060): 1226–1227. DOI: 10.1126/science.1213847. **(complementar)** | motivação do pacote ([guia_do_projeto.md](guia_do_projeto.md)) |
 
 ## Normas e regulação
 

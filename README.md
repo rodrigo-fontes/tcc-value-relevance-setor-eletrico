@@ -11,10 +11,23 @@ Pacote de reprodução do Trabalho de Conclusão de Curso de **Rodrigo Pereira F
 
 O repositório refaz, em **Python** e em **R**, todo o caminho entre os dados públicos da CVM e da B3 e cada número e cada tabela do TCC: 498 valores de tabelas e de texto, todos conferidos automaticamente.
 
+### Em poucas palavras
+
+**O que é.** O TCC investiga se três fundamentos contábeis do ano anterior acompanham o valor de mercado das empresas elétricas brasileiras em 2020–2025: rentabilidade (ROE), alavancagem líquida e porte. Pergunta também se essa relação se mantém quando mudam a forma de medir e o conjunto de empresas. O estudo se insere na literatura de relevância informacional, que associa números contábeis ao valor de mercado (Barth, Beaver e Landsman, 2001; Ohlson, 1995; Collins, Maydew e Weiss, 1997). No setor elétrico, dialoga com Souza, Ribeiro e Paulo (2024) e Leite et al. (2025).
+
+**Por que os scripts existem.** Um resultado empírico só pode ser verificado se outra pessoa refizer o caminho dos dados até os números (Peng, 2011). Aqui, a maior parte desse caminho vem antes da regressão. Quantidades de ações em milhares, tesouraria já descontada, desdobramentos fora de época e lucro da controladora zerado alteram o resultado sem nenhuma mensagem de erro. Os scripts tornam cada uma dessas decisões explícita, executável e conferível.
+
+**O que eles fazem.** Concilia preço e quantidade por classe de ação e calcula os fundamentos. Monta os painéis e estima o modelo com efeitos fixos de empresa e de ano. A inferência é feita com poucas empresas, por erro-padrão agrupado e *wild cluster bootstrap* com todas as 16.384 combinações (Cameron e Miller, 2015; Roodman et al., 2019). O modelo é reestimado em 43 variações. No fim, os scripts geram todas as tabelas do TCC e conferem cada número com o texto impresso.
+
+**O que o TCC encontrou.** No modelo principal, +10 p.p. de ROE se associam a uma capitalização 6,16% **menor**, o que contraria H1. Mais alavancagem se associa a menos valor (−9,62% por vez de dívida/EBITDA; apoia H2), e mais porte, a mais valor (+5,04% para +10% de ativo; apoia H3). As verificações mostram que o sinal do ROE não é estável: perde significância com o patrimônio no modelo, com o ROA e sem a CEB, que concentra 54,55% da informação usada para estimá-lo. Alavancagem e porte recebem apoio parcial. A lição para a Controladoria é conferir período, escopo e eventos extraordinários antes de usar um indicador como base de avaliação.
+
+➜ **Explicação completa e didática: [Guia do projeto](docs/guia_do_projeto.md).**
+
 ### Documentação
 
 | Documento | Para que serve |
 |---|---|
+| [Guia do projeto](docs/guia_do_projeto.md) | **Comece aqui.** O que é o estudo, a literatura em que se apoia, por que os scripts existem, o que cada um faz e o que o TCC encontrou |
 | [Decisões de projeto](docs/decisoes_de_projeto.md) | **Por que** cada escolha foi feita: o que se decidiu, a justificativa, a alternativa e onde ela foi testada (35 decisões de metodologia, dados e engenharia) |
 | [Metodologia](docs/metodologia.md) | Equações, regras e correspondência entre o TCC e o código |
 | [Casos de conciliação](docs/decisoes.md) | Cada empresa-ano em que uma regra ou um documento original mudou o dado |
@@ -170,6 +183,7 @@ flowchart LR
 ├── relatorio/roteiro.txt         texto do relatório em PDF (o mesmo nas duas linguagens)
 ├── coleta/                       scripts originais que baixaram os extratos complementares
 ├── docs/
+│   ├── guia_do_projeto.md        explicação didática: o estudo, os scripts e os achados
 │   ├── metodologia.md            equações, regras e correspondência código ↔ TCC
 │   ├── decisoes_de_projeto.md    por que cada escolha foi feita (metodologia, dados, engenharia)
 │   ├── decisoes.md               casos documentados de conciliação
