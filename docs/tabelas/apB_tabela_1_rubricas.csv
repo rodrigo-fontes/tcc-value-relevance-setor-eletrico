@@ -1,0 +1,13 @@
+conta,demonstracao,codigo
+Ativo total,BPA,1
+Caixa e equivalentes,BPA,1.01.01
+Aplicações financeiras (sensibilidade),BPA,1.01.02
+Empréstimos e financiamentos de curto prazo,BPP,2.01.04
+Empréstimos e financiamentos de longo prazo,BPP,2.02.01
+Patrimônio líquido total,BPP,2.03
+Participação dos não controladores no patrimônio,BPP,2.03.09
+Resultado antes do financeiro e dos tributos,DRE,3.05
+Lucro líquido total,DRE,3.11
+Lucro atribuível à controladora,DRE,3.11.01
+Lucro atribuível aos não controladores,DRE,3.11.02
+"Depreciação, amortização e exaustão",DVA,7.04.01

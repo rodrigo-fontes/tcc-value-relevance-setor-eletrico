@@ -63,4 +63,4 @@ O resultado item a item fica em `resultados/<linguagem>/conferencia_tcc.csv` e n
 
 ## Equivalência entre as linguagens
 
-Depois de rodar as duas versões, `python scripts/comparar_versoes.py` compara `resultados/python/` com `resultados/r/`, arquivo a arquivo: os 14 arquivos de resultados (valores numéricos com diferença relativa ≤ 10⁻⁹; na prática, da ordem de 10⁻¹³) e as 16 tabelas do TCC em CSV (idênticas, célula a célula). A integração contínua (`.github/workflows/reproducao.yml`) roda as duas versões e essa comparação a cada envio.
+Depois de rodar as duas versões, `python scripts/comparar_versoes.py` compara `resultados/python/` com `resultados/r/`, arquivo a arquivo: os 14 arquivos de resultados (valores numéricos com diferença relativa ≤ 10⁻⁹; na prática, da ordem de 10⁻¹³) e as 15 tabelas do TCC mais a interpretação da eq. 8, em CSV (idênticas, célula a célula). A integração contínua (`.github/workflows/reproducao.yml`) roda as duas versões e essa comparação a cada envio.

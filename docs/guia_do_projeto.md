@@ -214,7 +214,7 @@ O README e a [metodologia](metodologia.md) detalham esses pontos.
 
 | Se você quer… | Comece por |
 |---|---|
-| ver os resultados sem rodar nada | [relatorio_reproducao.pdf](relatorio_reproducao.pdf) |
+| ver os resultados sem rodar nada | [as tabelas e a figura do TCC](tabelas/README.md), ou o [relatório em PDF](relatorio_reproducao.pdf) |
 | rodar tudo | o [README](../README.md), seção "Como reproduzir" |
 | entender uma equação ou uma regra | [metodologia.md](metodologia.md) |
 | saber por que algo foi feito assim | [decisoes_de_projeto.md](decisoes_de_projeto.md) |

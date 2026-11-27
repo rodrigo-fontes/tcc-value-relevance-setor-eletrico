@@ -1,0 +1,7 @@
+etapa,procedimento,modulo
+Identificação,"Código CVM, CNPJ e classes de ações",tcc.entradas
+Contabilidade,"Exercício corrente, versão, escala e conciliação do lucro",tcc.contabil
+Capitalização,"Quantidade por classe, tesouraria e cotação nominal",tcc.capitalizacao
+Painel,"Defasagem anual, denominadores válidos e mínimo de quatro anos",tcc.painel
+Estimação,"Efeitos fixos de empresa e ano; inferência agrupada, bootstrap e Driscoll–Kraay",tcc.estimacao
+Sensibilidade,"Extremos, composição, negociação e extensão histórica",tcc.especificacoes

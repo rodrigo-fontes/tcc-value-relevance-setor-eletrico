@@ -10,7 +10,7 @@ Uso (na raiz do repositório, depois de rodar as duas versões):
 
 Compara, arquivo a arquivo, resultados/python/ com resultados/r/:
     • arquivos de dados (14): colunas numéricas com diferença relativa ≤ 10⁻⁹ e texto idêntico;
-    • tabelas do TCC (11): conteúdo idêntico, célula a célula.
+    • tabelas do TCC (15) e interpretação da eq. 8: conteúdo idêntico, célula a célula.
 Encerra com código 1 se algo divergir.
 """
 import sys                                                   # código de saída

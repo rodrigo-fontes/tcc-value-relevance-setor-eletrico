@@ -1,0 +1,13 @@
+modelo,variavel,coef,p_CR1,p_WCR,p_DK1,N_G_K,R2_intra
+Balanceado,ROE defasado,-0.6959,0.0007,0.0195,0.0010,54/9/17,0.377
+Balanceado,Alavancagem defasada,-0.0541,0.1869,0.1992,0.0159,54/9/17,0.377
+Balanceado,Porte defasado,0.3031,0.0206,0.1797,0.0001,54/9/17,0.377
+Sem CEB em 2022,ROE defasado,-0.8061,0.0083,0.0325,0.0007,75/14/22,0.149
+Sem CEB em 2022,Alavancagem defasada,-0.1101,0.0388,0.0392,0.0061,75/14/22,0.149
+Sem CEB em 2022,Porte defasado,0.5514,0.0239,0.0203,< 0.0001,75/14/22,0.149
+CEB: sem 2021–22,ROE defasado,-0.6913,0.0692,0.0696,0.0326,74/14/22,0.143
+CEB: sem 2021–22,Alavancagem defasada,-0.1064,0.0364,0.0470,0.0078,74/14/22,0.143
+CEB: sem 2021–22,Porte defasado,0.5663,0.0265,0.0198,< 0.0001,74/14/22,0.143
+Sem transições,ROE defasado,-0.8557,0.1393,0.1299,0.0141,69/13/21,0.210
+Sem transições,Alavancagem defasada,-0.1214,0.1599,0.0913,0.0184,69/13/21,0.210
+Sem transições,Porte defasado,0.5636,0.0243,0.0315,< 0.0001,69/13/21,0.210

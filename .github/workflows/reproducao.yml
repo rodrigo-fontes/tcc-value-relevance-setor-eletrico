@@ -36,6 +36,9 @@ jobs:
       - name: Python × R
         run: python scripts/comparar_versoes.py
 
+      - name: Tabelas publicadas em docs/tabelas
+        run: python scripts/conferir_tabelas_publicadas.py
+
       - name: Publicar relatórios e tabelas
         uses: actions/upload-artifact@v4
         with:

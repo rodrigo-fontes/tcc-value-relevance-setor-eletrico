@@ -1,0 +1,4 @@
+fundamento,calculo,efeito_pct
+ROE +10 p.p.,"exp(b x 0,10) - 1",-6.16
+Alavancagem +1 vez,exp(b) - 1,-9.62
+Ativo +10%,"1,10^b - 1",5.04

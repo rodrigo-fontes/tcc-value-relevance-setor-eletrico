@@ -1,0 +1,4 @@
+fundamento,coeficiente,erro_padrao,p_CR1,IC95_inf,IC95_sup
+ROE defasado,-0.6354,0.1044,< 0.0001,-0.8609,-0.4098
+Alavancagem defasada,-0.1011,0.0384,0.0208,-0.1842,-0.0181
+Porte defasado,0.5164,0.1934,0.0192,0.0987,0.9341

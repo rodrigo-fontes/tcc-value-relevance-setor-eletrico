@@ -1,0 +1,10 @@
+identificador,ticker,capitalizacao,fundamentos,elegiveis,motivos_no_codigo,restricao_tcc
+AESO3,AESO3,0,4,0,sem cotação de dezembro da classe,Cotação por classe não conciliada
+CEEB3,CEEB3,0,6,0,sem cotação de dezembro da classe,Cotação preferencial ausente
+CEED3,CEED3,3,0,0,subclasses (PNA/PNB) ou tesouraria sem repartição; sem cotação de dezembro da classe,Classes e menos de quatro anos completos
+COCE3,COCE3,0,6,0,subclasses (PNA/PNB) ou tesouraria sem repartição; sem cotação de dezembro da classe,"Classes, tesouraria ou cotação não conciliadas"
+CPLE3,CPLE3,2,6,2,subclasses (PNA/PNB) ou tesouraria sem repartição,"Conciliação incompleta das subclasses acionárias; apenas dois exercícios elegíveis, abaixo do mínimo de quatro"
+ELET3,ELET3,2,6,2,subclasses (PNA/PNB) ou tesouraria sem repartição; sem cotação de dezembro da classe,"Conciliação incompleta das subclasses acionárias; apenas dois exercícios elegíveis, abaixo do mínimo de quatro"
+EMAE3,EMAE3,1,5,1,sem cotação de dezembro da classe,Cotação insuficiente
+ENBR3 (EDP),ENBR3,1,6,1,sem cotação de dezembro da classe; tesouraria divergente entre DFP e FRE,Tesouraria divergente e cotação insuficiente
+SRNA3,SRNA3,2,4,2,sem cotação de dezembro da classe; capital ambíguo ou ausente na CVM,Capital e cotações insuficientes

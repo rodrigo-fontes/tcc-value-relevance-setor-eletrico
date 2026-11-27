@@ -1,0 +1,5 @@
+medida,definicao,unidade,equacao,coluna
+Valor de mercado,Logaritmo da capitalização das classes elegíveis,ln de reais,eqs. 1–2,ln_mcap
+Rentabilidade,Lucro / patrimônio da controladora,Decimal,eq. 3,roe_lag
+Alavancagem,Dívida financeira líquida / EBITDA aproximado,Vezes,eqs. 4–5,dl_lag
+Porte,Logaritmo do ativo total,ln de reais,eq. 6,size_lag

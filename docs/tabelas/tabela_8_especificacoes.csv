@@ -1,0 +1,16 @@
+modelo,variavel,coef,p_CR1,p_WCR,N_G_K,R2_intra
++ ln(PL),ROE,-0.5203,0.0385,0.2009,76/14/23,0.225
++ ln(PL),Alavancagem,-0.0961,0.0120,0.0221,76/14/23,0.225
++ ln(PL),ln(ativo),0.4211,0.0076,0.0214,76/14/23,0.225
++ ln(PL),ln(PL),0.2413,0.4613,0.5510,76/14/23,0.225
+ROA líquido,ROA líquido,-0.9017,0.2533,0.3412,76/14/22,0.159
+ROA líquido,Alavancagem,-0.0969,0.0188,0.0292,76/14/22,0.159
+ROA líquido,ln(ativo),0.4470,0.0896,0.0118,76/14/22,0.159
+ROA operacional,ROA operacional,-0.2655,0.6413,0.6285,76/14/22,0.149
+ROA operacional,Alavancagem,-0.0934,0.0244,0.0304,76/14/22,0.149
+ROA operacional,ln(ativo),0.4743,0.0643,0.0133,76/14/22,0.149
+Lucro e PL,Lucro (R$ bi),-0.6194,0.2795,0.2172,76/14/21,0.460
+Lucro e PL,PL (R$ bi),1.1177,0.0002,0.0208,76/14/21,0.460
+Dívida ampliada,ROE,-0.5939,< 0.0001,0.0078,76/14/22,0.183
+Dívida ampliada,Alav. ampliada,-0.0878,0.0053,0.0262,76/14/22,0.183
+Dívida ampliada,ln(ativo),0.4881,0.0118,0.0028,76/14/22,0.183

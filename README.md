@@ -28,11 +28,12 @@ O repositório refaz, em **Python** e em **R**, todo o caminho entre os dados p�
 | Documento | Para que serve |
 |---|---|
 | [Guia do projeto](docs/guia_do_projeto.md) | **Comece aqui.** O que é o estudo, a literatura em que se apoia, por que os scripts existem, o que cada um faz e o que o TCC encontrou |
-| [Decisões de projeto](docs/decisoes_de_projeto.md) | **Por que** cada escolha foi feita: o que se decidiu, a justificativa, a alternativa e onde ela foi testada (35 decisões de metodologia, dados e engenharia) |
+| [Decisões de projeto](docs/decisoes_de_projeto.md) | **Por que** cada escolha foi feita: o que se decidiu, a justificativa, a alternativa e onde ela foi testada (36 decisões de metodologia, dados e engenharia) |
 | [Metodologia](docs/metodologia.md) | Equações, regras e correspondência entre o TCC e o código |
 | [Casos de conciliação](docs/decisoes.md) | Cada empresa-ano em que uma regra ou um documento original mudou o dado |
 | [Conferência](docs/conferencia.md) | Como os 498 valores e as listas do TCC são conferidos |
 | [Referências](docs/referencias.md) | Referencial teórico e fontes de dados |
+| [Tabelas e figura do TCC](docs/tabelas/README.md) | As 15 tabelas e a Figura 1, geradas pelo código e legíveis direto no GitHub |
 | [Relatório de reprodução (PDF)](docs/relatorio_reproducao.pdf) | Todas as tabelas do TCC, geradas pelo código e explicadas |
 
 ---
@@ -118,6 +119,9 @@ Rscript R/executar.R
 
 # Opcional: confere se Python e R deram o mesmo resultado
 python scripts/comparar_versoes.py
+
+# Opcional: confere se docs/tabelas/ está igual ao que o código gera
+python scripts/conferir_tabelas_publicadas.py
 ```
 
 | | Python | R |
@@ -177,7 +181,9 @@ flowchart LR
 ├── R/                            versão R  → R/README.md
 │   ├── executar.R                roda as cinco etapas
 │   └── *.R                       os mesmos 11 módulos
-├── scripts/comparar_versoes.py   Python × R, arquivo a arquivo
+├── scripts/
+│   ├── comparar_versoes.py       Python × R, arquivo a arquivo
+│   └── conferir_tabelas_publicadas.py  docs/tabelas/ × tabelas geradas
 ├── dados/                        extratos congelados da coleta (entrada)  → dados/README.md
 │   ├── cvm/                      DFP e FRE
 │   ├── b3/                       último negócio de dezembro e manifesto de hashes
@@ -193,13 +199,14 @@ flowchart LR
 │   ├── decisoes.md               casos documentados de conciliação
 │   ├── conferencia.md            como os resultados são conferidos
 │   ├── referencias.md            referencial teórico e fontes
+│   ├── tabelas/                  as 15 tabelas do TCC em CSV, com índice (cópia conferida pela integração contínua)
 │   ├── relatorio_reproducao.pdf  relatório gerado pelos scripts
 │   └── figura_1.png              Figura 1 do TCC
 ├── .github/workflows/            integração contínua: roda as duas versões e compara
 └── resultados/                   gerado na execução (não versionado)
 ```
 
-A cada envio ao GitHub, a integração contínua roda as duas versões, as três conferências e a comparação Python × R.
+A cada envio ao GitHub, a integração contínua roda as duas versões, as três conferências, a comparação Python × R e a conferência de `docs/tabelas/`.
 
 ---
 

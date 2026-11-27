@@ -1,0 +1,15 @@
+companhia,ticker,N,segmento,relacao_societaria
+Auren,AURE3,4,G,CESP: reorganização em 2022; AES Brasil: incorporação em 2024
+CEB,CEBR3,6,G; D até 2021,CEB-D vendida à Neoenergia em 2021
+Celesc,CLSC3,6,D e G,Holding de Celesc Distribuição e Celesc Geração
+Cemig,CMIG3,6,"G, T e D",Cocontroladora da Taesa
+CPFL Energia,CPFE3,6,"G, T e D",Controlada pelo grupo State Grid
+Engie Brasil,EGIE3,6,G e T,Integra o grupo Engie
+Elektro,EKTR3,4,D,Controlada pela Neoenergia desde 2017
+Eneva,ENEV3,6,G integrada à produção de gás,Integra ativos de gás e geração; sem vínculo de controle aqui examinado com outra empresa do painel
+Equatorial,EQTL3,5,"D, T e G",Holding de concessionárias e ativos de geração
+Rio Paranapanema,GEPA3,4,G,Integra o grupo CTG Brasil
+Light,LIGT3,5,D e G,Holding de Light SESA e Light Energia
+Neoenergia,NEOE3,6,"G, T e D",Grupo Iberdrola; controla a Elektro e adquiriu a CEB-D
+Rede Energia,REDE3,6,D,Holding controlada pela Energisa desde 2014
+Taesa,TAEE3,6,T,Controle compartilhado: Cemig e ISA

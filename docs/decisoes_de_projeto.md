@@ -53,6 +53,7 @@ As decisões metodológicas (parte A) seguem o texto do TCC. As de dados (parte 
 | C9 | Um único ramo, com pastas `python/` e `R/` | — |
 | C10 | Comentários linha a linha, com referências | — |
 | C11 | Licenças separadas para código e texto | — |
+| C12 | Cópia das tabelas geradas em `docs/tabelas/` | — |
 
 ---
 
@@ -274,7 +275,7 @@ Os casos concretos de cada regra estão em [decisoes.md](decisoes.md) e no relat
 
 ### C8. Integração contínua a cada envio
 
-- **Decisão.** `.github/workflows/reproducao.yml` roda as duas versões, as três conferências e a comparação Python × R a cada envio ao GitHub. O selo do README mostra o resultado.
+- **Decisão.** `.github/workflows/reproducao.yml` roda as duas versões, as três conferências e a comparação Python × R e a conferência de `docs/tabelas/` a cada envio ao GitHub. O selo do README mostra o resultado.
 - **Por quê.** Prova, num computador limpo, que o repositório reproduz o TCC, e impede que uma alteração futura quebre a reprodução sem ninguém perceber.
 
 ### C9. Um único ramo, com pastas `python/` e `R/`
@@ -291,3 +292,9 @@ Os casos concretos de cada regra estão em [decisoes.md](decisoes.md) e no relat
 
 - **Decisão.** Código sob MIT; textos, relatório e figuras sob CC BY 4.0.
 - **Por quê.** MIT é a licença usual para código e permite reuso amplo. CC BY 4.0 é a usual para texto acadêmico e exige citação. Os dados de origem não são relicenciados: seguem os termos da CVM e da B3.
+
+### C12. Cópia das tabelas geradas em `docs/tabelas/`
+
+- **Decisão.** As tabelas do TCC geradas pelo código são versionadas em `docs/tabelas/`, com um índice que liga cada arquivo à tabela do trabalho.
+- **Por quê.** `resultados/` não é versionada, porque é saída da execução. Sem a cópia, quem abre o repositório no GitHub não vê nenhuma tabela sem rodar o código.
+- **Risco e controle.** Uma cópia pode ficar desatualizada. A integração contínua roda `scripts/conferir_tabelas_publicadas.py`, que falha se a cópia divergir do que o código gera agora.
